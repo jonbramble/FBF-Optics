@@ -11,6 +11,12 @@
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
+
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector_proxy.hpp>
+#include <boost/numeric/ublas/triangular.hpp>
+#include <boost/numeric/ublas/lu.hpp>
+
 #include <complex>
 
 using namespace boost::numeric::ublas;
@@ -20,9 +26,10 @@ class Fbfoptics {
 
 public:
 	Fbfoptics();
-	void incmat(double na, double cphia, matrix<complex<double> >& ILa);
-	void extmat(double nf, complex<double> cphif, matrix<complex<double> >& Lf);
-	void dietens(double eav, double dem, double S, double stheta, double ctheta, double sphi, double cphi, matrix<double>& ep);
+	void incmat(const double, const double, matrix<complex<double> >&);
+	void extmat(const double, const complex<double>, matrix<complex<double> >&);
+	void dietens(const double,const double,const double,const double,const double,const double, const double, matrix<double>&);
+	void gtmiso(const complex<double>,const double,const double,const double, matrix<complex<double> >&);
 };
 
 

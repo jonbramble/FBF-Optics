@@ -14,7 +14,7 @@ Fbfoptics::Fbfoptics() {
 	
 }
 
-void Fbfoptics::incmat(double na, double cphia, matrix<complex<double> >& ILa){
+void Fbfoptics::incmat(const double na, const double cphia, matrix<complex<double> >& ILa){
 	ILa(0,2) = complex<double>(0.5,0);
 	ILa(0,3) = complex<double>(1/(2*na*cphia),0);
 	ILa(1,2) = complex<double>(0.5,0);
@@ -25,7 +25,7 @@ void Fbfoptics::incmat(double na, double cphia, matrix<complex<double> >& ILa){
 	ILa(3,1) = complex<double>(1/(2*na),0);	
 }
 
-void Fbfoptics::extmat(double nf, complex<double> cphif, matrix<complex<double> >& Lf)
+void Fbfoptics::extmat(const double nf, const complex<double> cphif, matrix<complex<double> >& Lf)
 {
 	complex<double> znf= complex<double>(nf,0.0);
 	complex<double> zk = znf*cphif;
@@ -38,7 +38,7 @@ void Fbfoptics::extmat(double nf, complex<double> cphif, matrix<complex<double> 
 
 void Fbfoptics::dietens(double eav, double dem, double S, double stheta, double ctheta, double sphi, double cphi, matrix<double>& ep)
 {
-	matrix<double> A (3,3), ea(3,3), Ap(3,3);
+	matrix<double> A (3,3), ea(3,3), Ap(3,3), inverse(3,3);
 	matrix<double> epsilon (3,3);
 	
 	A(0,0) = cphi*ctheta;
@@ -55,15 +55,85 @@ void Fbfoptics::dietens(double eav, double dem, double S, double stheta, double 
 	epsilon(1,1)=eav-(1/3)*S*dem;
 	epsilon(2,2)=eav+(2/3)*S*dem;
 
-	ea = prod(epsilon,A);
-	
-	
+	ea = prod(A,epsilon);
 
+	//inverse http://www.crystalclearsoftware.com/cgi-bin/boost_wiki/wiki.pl?LU_Matrix_Inversion
+	typedef permutation_matrix<std::size_t> pmatrix;
+ 	matrix<double> wc(A); // create a working copy of the input
+ 	pmatrix pm(wc.size1()); // create a permutation matrix for the LU-factorization
+ 	int res = lu_factorize(wc,pm); // perform LU-factorization
+        //if( res != 0 ) return false;
+ 	inverse.assign(identity_matrix<double>(wc.size1())); // create identity matrix of "inverse"
+ 	lu_substitute(wc, pm, inverse); // backsubstitute to get the inverse
+
+	ep = prod(ea,inverse);
+}
+
+void Fbfoptics::gtmiso(const complex<double> eiso, const double k0, const double eta, const double diso, matrix<complex<double> >& Tiso)
+{
+	double eta2 = pow(eta,2);
+	complex<double> za, qiso, zb, zc, zd, carg, sarg, i, one;
+
+	za = complex<double>(real(eiso)-eta2,imag(eiso));
+	
 
 }
 
 
 /*
+
+void gtmiso(gsl_matrix_complex * Tiso, gsl_complex eiso, double k0, double eta, double diso)
+{
+	double eta2 = pow(eta,2);
+	gsl_complex rb = gsl_complex_rect(eta2,0);
+
+	gsl_complex za = gsl_complex_sub_real(eiso,eta2);
+	gsl_complex qiso = gsl_complex_sqrt(za);
+	gsl_complex zb = gsl_complex_mul_real(qiso,k0);
+	gsl_complex zc = gsl_complex_mul_real(zb,diso);
+	gsl_complex zd = gsl_complex_div(rb,eiso);
+
+	gsl_complex carg = gsl_complex_cos(zc);
+	gsl_complex sarg = gsl_complex_sin(zc);
+
+	gsl_complex i = gsl_complex_rect(0,1);
+	gsl_complex one = gsl_complex_rect(1,0);
+
+	gsl_matrix_complex_set_zero(Tiso);
+
+	gsl_matrix_complex_set(Tiso,0,0,carg);
+	gsl_matrix_complex_set(Tiso,1,1,carg);
+	gsl_matrix_complex_set(Tiso,2,2,carg);
+	gsl_matrix_complex_set(Tiso,3,3,carg);
+
+	gsl_complex zd1 = gsl_complex_sub(one,zd);
+	gsl_complex zd2 = eiso;
+	gsl_complex zd3 = one;
+	gsl_complex zd4 = gsl_complex_sub_real(eiso,eta2);
+
+	gsl_complex zmult1 = gsl_complex_mul(zd1,i);
+	gsl_complex zmult2 = gsl_complex_mul(zd2,i);
+	gsl_complex zmult3 = gsl_complex_mul(zd3,i);
+	gsl_complex zmult4 = gsl_complex_mul(zd4,i);
+
+	gsl_complex zdiv1 = gsl_complex_div(zmult1,qiso);
+	gsl_complex zdiv2 = gsl_complex_div(zmult2,qiso);
+	gsl_complex zdiv3 = gsl_complex_div(zmult3,qiso);
+	gsl_complex zdiv4 = gsl_complex_div(zmult4,qiso);
+
+	gsl_complex zmult5 = gsl_complex_mul(zdiv1,sarg);
+	gsl_complex zmult6 = gsl_complex_mul(zdiv2,sarg);
+	gsl_complex zmult7 = gsl_complex_mul(zdiv3,sarg);
+	gsl_complex zmult8 = gsl_complex_mul(zdiv4,sarg);
+
+	gsl_matrix_complex_set(Tiso,0,1,zmult5);
+	gsl_matrix_complex_set(Tiso,1,0,zmult6);
+	gsl_matrix_complex_set(Tiso,2,3,zmult7);
+	gsl_matrix_complex_set(Tiso,3,2,zmult8);
+
+}
+
+
 int dietens(gsl_matrix * ep, double eav, double dem, double S, double stheta, double ctheta, double sphi, double cphi)
 {
 	gsl_matrix * A = gsl_matrix_alloc(3,3);
@@ -182,56 +252,6 @@ int incmat(gsl_matrix_complex * ILa, double na, double cphia)
 
 
 
-void gtmiso(gsl_matrix_complex * Tiso, gsl_complex eiso, double k0, double eta, double diso)
-{
-	double eta2 = pow(eta,2);
-	gsl_complex rb = gsl_complex_rect(eta2,0);
-
-	gsl_complex za = gsl_complex_sub_real(eiso,eta2);
-	gsl_complex qiso = gsl_complex_sqrt(za);
-	gsl_complex zb = gsl_complex_mul_real(qiso,k0);
-	gsl_complex zc = gsl_complex_mul_real(zb,diso);
-	gsl_complex zd = gsl_complex_div(rb,eiso);
-
-	gsl_complex carg = gsl_complex_cos(zc);
-	gsl_complex sarg = gsl_complex_sin(zc);
-
-	gsl_complex i = gsl_complex_rect(0,1);
-	gsl_complex one = gsl_complex_rect(1,0);
-
-	gsl_matrix_complex_set_zero(Tiso);
-
-	gsl_matrix_complex_set(Tiso,0,0,carg);
-	gsl_matrix_complex_set(Tiso,1,1,carg);
-	gsl_matrix_complex_set(Tiso,2,2,carg);
-	gsl_matrix_complex_set(Tiso,3,3,carg);
-
-	gsl_complex zd1 = gsl_complex_sub(one,zd);
-	gsl_complex zd2 = eiso;
-	gsl_complex zd3 = one;
-	gsl_complex zd4 = gsl_complex_sub_real(eiso,eta2);
-
-	gsl_complex zmult1 = gsl_complex_mul(zd1,i);
-	gsl_complex zmult2 = gsl_complex_mul(zd2,i);
-	gsl_complex zmult3 = gsl_complex_mul(zd3,i);
-	gsl_complex zmult4 = gsl_complex_mul(zd4,i);
-
-	gsl_complex zdiv1 = gsl_complex_div(zmult1,qiso);
-	gsl_complex zdiv2 = gsl_complex_div(zmult2,qiso);
-	gsl_complex zdiv3 = gsl_complex_div(zmult3,qiso);
-	gsl_complex zdiv4 = gsl_complex_div(zmult4,qiso);
-
-	gsl_complex zmult5 = gsl_complex_mul(zdiv1,sarg);
-	gsl_complex zmult6 = gsl_complex_mul(zdiv2,sarg);
-	gsl_complex zmult7 = gsl_complex_mul(zdiv3,sarg);
-	gsl_complex zmult8 = gsl_complex_mul(zdiv4,sarg);
-
-	gsl_matrix_complex_set(Tiso,0,1,zmult5);
-	gsl_matrix_complex_set(Tiso,1,0,zmult6);
-	gsl_matrix_complex_set(Tiso,2,3,zmult7);
-	gsl_matrix_complex_set(Tiso,3,2,zmult8);
-
-}
 
 void diffpropmat(gsl_matrix * Delta, gsl_matrix * ep, double eta)
 {

@@ -30,10 +30,13 @@ int main(int argc, char* argv[]) {
 	//std::cout << m3 << std::endl;
     	//std::cout << prod (m1, m2) << std::endl;*/
 
-	matrix<complex<double> > R(4,4), ILa(4,4), Lf(4,4); 
+	matrix<complex<double> > R(4,4), ILa(4,4), Lf(4,4);
+	matrix<double> ep(3,3);
 
 	test.incmat(2.0,5.0,ILa);
 	test.extmat(2.0,5.0,Lf);
+
+	test.dietens(1,1,1,0.1,0.1,0.1,0.1,ep);
 
 	R = prod (ILa, Lf);
 	
