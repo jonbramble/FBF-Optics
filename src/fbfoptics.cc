@@ -11,11 +11,10 @@
 #include "../include/fbfoptics.hpp"
 
 Fbfoptics::Fbfoptics() {
-	ILa = zero_matrix<complex<double> >(4,4); 
-	Lf = zero_matrix<complex<double> >(4,4);
+	
 }
 
-void Fbfoptics::incmat(double na, double cphia){
+void Fbfoptics::incmat(double na, double cphia, matrix<complex<double> >& ILa){
 	ILa(0,2) = complex<double>(0.5,0);
 	ILa(0,3) = complex<double>(1/(2*na*cphia),0);
 	ILa(1,2) = complex<double>(0.5,0);
@@ -26,7 +25,7 @@ void Fbfoptics::incmat(double na, double cphia){
 	ILa(3,1) = complex<double>(1/(2*na),0);	
 }
 
-void Fbfoptics::extmat(double nf, complex<double> cphif)
+void Fbfoptics::extmat(double nf, complex<double> cphif, matrix<complex<double> >& Lf)
 {
 	complex<double> znf= complex<double>(nf,0.0);
 	complex<double> zk = znf*cphif;
@@ -37,58 +36,34 @@ void Fbfoptics::extmat(double nf, complex<double> cphif)
 	Lf(3,0) = zk;
 }
 
+void Fbfoptics::dietens(double eav, double dem, double S, double stheta, double ctheta, double sphi, double cphi, matrix<double>& ep)
+{
+	matrix<double> A (3,3), ea(3,3), Ap(3,3);
+	matrix<double> epsilon (3,3);
+	
+	A(0,0) = cphi*ctheta;
+	A(0,1) = sphi;
+	A(0,2) = -cphi*stheta;
+	A(1,0) = -sphi*ctheta;
+	A(1,1) = cphi;
+	A(1,2) = sphi*stheta;
+	A(2,0) = stheta;
+	A(2,1) = 0;
+	A(2,2) = ctheta;
+
+	epsilon(0,0)=eav-(1/3)*S*dem;
+	epsilon(1,1)=eav-(1/3)*S*dem;
+	epsilon(2,2)=eav+(2/3)*S*dem;
+
+	ea = prod(epsilon,A);
+	
+	
+
+
+}
+
 
 /*
-#include "fbfoptics.h"
-
-int extmat(gsl_matrix_complex * Lf, double nf, gsl_complex cphif)
-{
-	gsl_matrix_complex_set_zero(Lf);
-	gsl_complex znf = gsl_complex_rect(nf,0);
-	gsl_complex zk = gsl_complex_mul(znf,cphif);
-	gsl_complex one = gsl_complex_rect(1,0);
-
-	gsl_matrix_complex_set(Lf,0,2,cphif);
-	gsl_matrix_complex_set(Lf,1,2,znf);
-	gsl_matrix_complex_set(Lf,2,0,one);
-	gsl_matrix_complex_set(Lf,3,0,zk);
-
-	return 1;
-
-}
-
-
-
-int incmat(gsl_matrix_complex * ILa, double na, double cphia)
-{
-	gsl_complex zb[8];
-	zb[0] = gsl_complex_rect(0.5,0);
-	zb[1] = gsl_complex_rect(1/(2*na*cphia),0);
-	zb[2] = gsl_complex_rect(0.5,0);
-	zb[3] = gsl_complex_rect(-1/(2*na*cphia),0);
-
-	zb[4] = gsl_complex_rect(1/(2*cphia),0);
-	zb[5] = gsl_complex_rect(1/(2*na),0);
-	zb[6] = gsl_complex_rect(-1/(2*cphia),0);
-	zb[7] = gsl_complex_rect(1/(2*na),0);
-
-	gsl_matrix_complex_set_zero(ILa);
-
-	gsl_matrix_complex_set(ILa,0,2,zb[0]);
-	gsl_matrix_complex_set(ILa,0,3,zb[1]);
-
-	gsl_matrix_complex_set(ILa,1,2,zb[2]);
-	gsl_matrix_complex_set(ILa,1,3,zb[3]);
-
-	gsl_matrix_complex_set(ILa,2,0,zb[4]);
-	gsl_matrix_complex_set(ILa,2,1,zb[5]);
-
-	gsl_matrix_complex_set(ILa,3,0,zb[6]);
-	gsl_matrix_complex_set(ILa,3,1,zb[7]);
-
-	return 1;
-}
-
 int dietens(gsl_matrix * ep, double eav, double dem, double S, double stheta, double ctheta, double sphi, double cphi)
 {
 	gsl_matrix * A = gsl_matrix_alloc(3,3);
@@ -150,6 +125,60 @@ int dietens(gsl_matrix * ep, double eav, double dem, double S, double stheta, do
 	}
 	return 1;
 }
+
+
+
+#include "fbfoptics.h"
+
+int extmat(gsl_matrix_complex * Lf, double nf, gsl_complex cphif)
+{
+	gsl_matrix_complex_set_zero(Lf);
+	gsl_complex znf = gsl_complex_rect(nf,0);
+	gsl_complex zk = gsl_complex_mul(znf,cphif);
+	gsl_complex one = gsl_complex_rect(1,0);
+
+	gsl_matrix_complex_set(Lf,0,2,cphif);
+	gsl_matrix_complex_set(Lf,1,2,znf);
+	gsl_matrix_complex_set(Lf,2,0,one);
+	gsl_matrix_complex_set(Lf,3,0,zk);
+
+	return 1;
+
+}
+
+
+
+int incmat(gsl_matrix_complex * ILa, double na, double cphia)
+{
+	gsl_complex zb[8];
+	zb[0] = gsl_complex_rect(0.5,0);
+	zb[1] = gsl_complex_rect(1/(2*na*cphia),0);
+	zb[2] = gsl_complex_rect(0.5,0);
+	zb[3] = gsl_complex_rect(-1/(2*na*cphia),0);
+
+	zb[4] = gsl_complex_rect(1/(2*cphia),0);
+	zb[5] = gsl_complex_rect(1/(2*na),0);
+	zb[6] = gsl_complex_rect(-1/(2*cphia),0);
+	zb[7] = gsl_complex_rect(1/(2*na),0);
+
+	gsl_matrix_complex_set_zero(ILa);
+
+	gsl_matrix_complex_set(ILa,0,2,zb[0]);
+	gsl_matrix_complex_set(ILa,0,3,zb[1]);
+
+	gsl_matrix_complex_set(ILa,1,2,zb[2]);
+	gsl_matrix_complex_set(ILa,1,3,zb[3]);
+
+	gsl_matrix_complex_set(ILa,2,0,zb[4]);
+	gsl_matrix_complex_set(ILa,2,1,zb[5]);
+
+	gsl_matrix_complex_set(ILa,3,0,zb[6]);
+	gsl_matrix_complex_set(ILa,3,1,zb[7]);
+
+	return 1;
+}
+
+
 
 
 

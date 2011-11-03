@@ -20,9 +20,9 @@ class Fbfoptics {
 
 public:
 	Fbfoptics();
-	matrix<complex<double> > ILa, Lf; 
-	void incmat(double na, double cphia);
-	void extmat(double nf, complex<double> cphif);
+	void incmat(double na, double cphia, matrix<complex<double> >& ILa);
+	void extmat(double nf, complex<double> cphif, matrix<complex<double> >& Lf);
+	void dietens(double eav, double dem, double S, double stheta, double ctheta, double sphi, double cphi, matrix<double>& ep);
 };
 
 
