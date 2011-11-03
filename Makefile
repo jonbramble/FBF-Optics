@@ -51,11 +51,9 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_FBF_Optics_OBJECTS = src/main.$(OBJEXT)
+am_FBF_Optics_OBJECTS = src/main.$(OBJEXT) src/fbfoptics.$(OBJEXT)
 FBF_Optics_OBJECTS = $(am_FBF_Optics_OBJECTS)
-am__DEPENDENCIES_1 =
-FBF_Optics_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+FBF_Optics_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -65,6 +63,10 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(FBF_Optics_SOURCES)
 DIST_SOURCES = $(FBF_Optics_SOURCES)
 ETAGS = etags
@@ -86,10 +88,6 @@ AUTOCONF = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run autoc
 AUTOHEADER = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run automake-1.11
 AWK = gawk
-CC = gcc
-CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2
-CIMG_LIBS = -L/usr/X11R6/lib -lpthread -lX11
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
@@ -101,9 +99,6 @@ ECHO_C =
 ECHO_N = -n
 ECHO_T = 
 EXEEXT = 
-GSL_CFLAGS = -I/usr/include
-GSL_CONFIG = /usr/bin/gsl-config
-GSL_LIBS = -L/usr/lib -lgsl -lgslcblas -lm
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -116,8 +111,6 @@ LTLIBOBJS =
 MAKEINFO = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
-OPENMP_CFLAGS = -fopenmp
-OPENMP_LIBS = -fopenmp
 PACKAGE = FBP_optics
 PACKAGE_BUGREPORT = phyjpb@leeds.ac.uk
 PACKAGE_NAME = FBP_optics
@@ -134,7 +127,6 @@ abs_builddir = /home/DS/phyjpb/Programming/C/FBF-Optics
 abs_srcdir = /home/DS/phyjpb/Programming/C/FBF-Optics
 abs_top_builddir = /home/DS/phyjpb/Programming/C/FBF-Optics
 abs_top_srcdir = /home/DS/phyjpb/Programming/C/FBF-Optics
-ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
 am__leading_dot = .
@@ -175,9 +167,10 @@ top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
-AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
-FBF_Optics_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(OPENMP_LIBS)
-FBF_Optics_SOURCES = src/main.cc
+
+#AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
+#FBF_Optics_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(OPENMP_LIBS)
+FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc include/fbfoptics.hpp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -278,17 +271,21 @@ src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/fbfoptics.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 FBF_Optics$(EXEEXT): $(FBF_Optics_OBJECTS) $(FBF_Optics_DEPENDENCIES) 
 	@rm -f FBF_Optics$(EXEEXT)
 	$(CXXLINK) $(FBF_Optics_OBJECTS) $(FBF_Optics_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f src/fbfoptics.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
+include src/$(DEPDIR)/fbfoptics.Po
 include src/$(DEPDIR)/main.Po
 
 .cc.o:

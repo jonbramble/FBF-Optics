@@ -13,7 +13,6 @@
 Fbfoptics::Fbfoptics() {
 	ILa = zero_matrix<complex<double> >(4,4); 
 	Lf = zero_matrix<complex<double> >(4,4);
-	
 }
 
 void Fbfoptics::incmat(double na, double cphia){

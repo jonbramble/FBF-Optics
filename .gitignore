@@ -1,4 +1,6 @@
 *~
+src/.deps
+src/*.o
 autom4te.cache/
 bin/
 FBF_Optics

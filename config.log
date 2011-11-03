@@ -43,106 +43,29 @@ PATH: /usr/games
 ## Core tests. ##
 ## ----------- ##
 
-configure:1958: checking for a BSD-compatible install
-configure:2026: result: /usr/bin/install -c
-configure:2037: checking whether build environment is sane
-configure:2087: result: yes
-configure:2228: checking for a thread-safe mkdir -p
-configure:2267: result: /bin/mkdir -p
-configure:2280: checking for gawk
-configure:2296: found /usr/bin/gawk
-configure:2307: result: gawk
-configure:2318: checking whether make sets $(MAKE)
-configure:2340: result: yes
-configure:2426: checking for style of include used by make
-configure:2454: result: GNU
-configure:2524: checking for gcc
-configure:2540: found /usr/bin/gcc
-configure:2551: result: gcc
-configure:2780: checking for C compiler version
-configure:2789: gcc --version >&5
-gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1
-Copyright (C) 2011 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-configure:2800: $? = 0
-configure:2789: gcc -v >&5
-Using built-in specs.
-COLLECT_GCC=gcc
-COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.6.1/lto-wrapper
-Target: x86_64-linux-gnu
-Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.1-9ubuntu3' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++,go --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-plugin --enable-objc-gc --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
-Thread model: posix
-gcc version 4.6.1 (Ubuntu/Linaro 4.6.1-9ubuntu3) 
-configure:2800: $? = 0
-configure:2789: gcc -V >&5
-gcc: error: unrecognized option '-V'
-gcc: fatal error: no input files
-compilation terminated.
-configure:2800: $? = 4
-configure:2789: gcc -qversion >&5
-gcc: error: unrecognized option '-qversion'
-gcc: fatal error: no input files
-compilation terminated.
-configure:2800: $? = 4
-configure:2820: checking whether the C compiler works
-configure:2842: gcc    conftest.c  >&5
-configure:2846: $? = 0
-configure:2894: result: yes
-configure:2897: checking for C compiler default output file name
-configure:2899: result: a.out
-configure:2905: checking for suffix of executables
-configure:2912: gcc -o conftest    conftest.c  >&5
-configure:2916: $? = 0
-configure:2938: result: 
-configure:2960: checking whether we are cross compiling
-configure:2968: gcc -o conftest    conftest.c  >&5
-configure:2972: $? = 0
-configure:2979: ./conftest
-configure:2983: $? = 0
-configure:2998: result: no
-configure:3003: checking for suffix of object files
-configure:3025: gcc -c   conftest.c >&5
-configure:3029: $? = 0
-configure:3050: result: o
-configure:3054: checking whether we are using the GNU C compiler
-configure:3073: gcc -c   conftest.c >&5
-configure:3073: $? = 0
-configure:3082: result: yes
-configure:3091: checking whether gcc accepts -g
-configure:3111: gcc -c -g  conftest.c >&5
-configure:3111: $? = 0
-configure:3152: result: yes
-configure:3169: checking for gcc option to accept ISO C89
-configure:3233: gcc  -c -g -O2  conftest.c >&5
-configure:3233: $? = 0
-configure:3246: result: none needed
-configure:3268: checking dependency style of gcc
-configure:3378: result: gcc3
-configure:3430: checking for gsl-config
-configure:3448: found /usr/bin/gsl-config
-configure:3461: result: /usr/bin/gsl-config
-configure:3470: checking for GSL - version >= 1.13
-configure:3564: gcc -o conftest -g -O2 -I/usr/include   conftest.c  -L/usr/lib -lgsl -lgslcblas -lm >&5
-conftest.c: In function 'main':
-conftest.c:38:10: warning: ignoring return value of 'system', declared with attribute warn_unused_result [-Wunused-result]
-configure:3564: $? = 0
-configure:3564: ./conftest
-configure:3564: $? = 0
-configure:3578: result: yes
-configure:3706: checking for g++
-configure:3722: found /usr/bin/g++
-configure:3733: result: g++
-configure:3760: checking for C++ compiler version
-configure:3769: g++ --version >&5
+configure:1806: checking for a BSD-compatible install
+configure:1874: result: /usr/bin/install -c
+configure:1885: checking whether build environment is sane
+configure:1935: result: yes
+configure:2076: checking for a thread-safe mkdir -p
+configure:2115: result: /bin/mkdir -p
+configure:2128: checking for gawk
+configure:2144: found /usr/bin/gawk
+configure:2155: result: gawk
+configure:2166: checking whether make sets $(MAKE)
+configure:2188: result: yes
+configure:2320: checking for g++
+configure:2336: found /usr/bin/g++
+configure:2347: result: g++
+configure:2374: checking for C++ compiler version
+configure:2383: g++ --version >&5
 g++ (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1
 Copyright (C) 2011 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:3780: $? = 0
-configure:3769: g++ -v >&5
+configure:2394: $? = 0
+configure:2383: g++ -v >&5
 Using built-in specs.
 COLLECT_GCC=g++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.6.1/lto-wrapper
@@ -150,28 +73,50 @@ Target: x86_64-linux-gnu
 Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.1-9ubuntu3' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++,go --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-plugin --enable-objc-gc --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
 gcc version 4.6.1 (Ubuntu/Linaro 4.6.1-9ubuntu3) 
-configure:3780: $? = 0
-configure:3769: g++ -V >&5
+configure:2394: $? = 0
+configure:2383: g++ -V >&5
 g++: error: unrecognized option '-V'
 g++: fatal error: no input files
 compilation terminated.
-configure:3780: $? = 4
-configure:3769: g++ -qversion >&5
+configure:2394: $? = 4
+configure:2383: g++ -qversion >&5
 g++: error: unrecognized option '-qversion'
 g++: fatal error: no input files
 compilation terminated.
-configure:3780: $? = 4
-configure:3784: checking whether we are using the GNU C++ compiler
-configure:3803: g++ -c   conftest.cpp >&5
-configure:3803: $? = 0
-configure:3812: result: yes
-configure:3821: checking whether g++ accepts -g
-configure:3841: g++ -c -g  conftest.cpp >&5
-configure:3841: $? = 0
-configure:3882: result: yes
-configure:3907: checking dependency style of g++
-configure:4017: result: gcc3
-configure:4168: creating ./config.status
+configure:2394: $? = 4
+configure:2414: checking whether the C++ compiler works
+configure:2436: g++    conftest.cpp  >&5
+configure:2440: $? = 0
+configure:2488: result: yes
+configure:2491: checking for C++ compiler default output file name
+configure:2493: result: a.out
+configure:2499: checking for suffix of executables
+configure:2506: g++ -o conftest    conftest.cpp  >&5
+configure:2510: $? = 0
+configure:2532: result: 
+configure:2554: checking whether we are cross compiling
+configure:2562: g++ -o conftest    conftest.cpp  >&5
+configure:2566: $? = 0
+configure:2573: ./conftest
+configure:2577: $? = 0
+configure:2592: result: no
+configure:2597: checking for suffix of object files
+configure:2619: g++ -c   conftest.cpp >&5
+configure:2623: $? = 0
+configure:2644: result: o
+configure:2648: checking whether we are using the GNU C++ compiler
+configure:2667: g++ -c   conftest.cpp >&5
+configure:2667: $? = 0
+configure:2676: result: yes
+configure:2685: checking whether g++ accepts -g
+configure:2705: g++ -c -g  conftest.cpp >&5
+configure:2705: $? = 0
+configure:2746: result: yes
+configure:2780: checking for style of include used by make
+configure:2808: result: GNU
+configure:2833: checking dependency style of g++
+configure:2943: result: gcc3
+configure:3090: creating ./config.status
 
 ## ---------------------- ##
 ## Running config.status. ##
@@ -188,23 +133,18 @@ generated by GNU Autoconf 2.68.  Invocation command line was
 
 on phy-pc3089
 
-config.status:857: creating Makefile
-config.status:857: creating config.h
-config.status:1038: config.h is unchanged
-config.status:1086: executing depfiles commands
+config.status:845: creating Makefile
+config.status:845: creating config.h
+config.status:1026: config.h is unchanged
+config.status:1074: executing depfiles commands
 
 ## ---------------- ##
 ## Cache variables. ##
 ## ---------------- ##
 
-ac_cv_c_compiler_gnu=yes
 ac_cv_cxx_compiler_gnu=yes
 ac_cv_env_CCC_set=
 ac_cv_env_CCC_value=
-ac_cv_env_CC_set=
-ac_cv_env_CC_value=
-ac_cv_env_CFLAGS_set=
-ac_cv_env_CFLAGS_value=
 ac_cv_env_CPPFLAGS_set=
 ac_cv_env_CPPFLAGS_value=
 ac_cv_env_CXXFLAGS_set=
@@ -222,17 +162,12 @@ ac_cv_env_host_alias_value=
 ac_cv_env_target_alias_set=
 ac_cv_env_target_alias_value=
 ac_cv_objext=o
-ac_cv_path_GSL_CONFIG=/usr/bin/gsl-config
 ac_cv_path_install='/usr/bin/install -c'
 ac_cv_path_mkdir=/bin/mkdir
 ac_cv_prog_AWK=gawk
-ac_cv_prog_ac_ct_CC=gcc
 ac_cv_prog_ac_ct_CXX=g++
-ac_cv_prog_cc_c89=
-ac_cv_prog_cc_g=yes
 ac_cv_prog_cxx_g=yes
 ac_cv_prog_make_make_set=yes
-am_cv_CC_dependencies_compiler_type=gcc3
 am_cv_CXX_dependencies_compiler_type=gcc3
 
 ## ----------------- ##
@@ -248,10 +183,6 @@ AUTOCONF='${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run autoco
 AUTOHEADER='${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run autoheader'
 AUTOMAKE='${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run automake-1.11'
 AWK='gawk'
-CC='gcc'
-CCDEPMODE='depmode=gcc3'
-CFLAGS='-g -O2'
-CIMG_LIBS='-L/usr/X11R6/lib -lpthread -lX11'
 CPPFLAGS=''
 CXX='g++'
 CXXDEPMODE='depmode=gcc3'
@@ -263,9 +194,6 @@ ECHO_C=''
 ECHO_N='-n'
 ECHO_T=''
 EXEEXT=''
-GSL_CFLAGS='-I/usr/include'
-GSL_CONFIG='/usr/bin/gsl-config'
-GSL_LIBS='-L/usr/lib -lgsl -lgslcblas -lm'
 INSTALL_DATA='${INSTALL} -m 644'
 INSTALL_PROGRAM='${INSTALL}'
 INSTALL_SCRIPT='${INSTALL}'
@@ -277,8 +205,6 @@ LTLIBOBJS=''
 MAKEINFO='${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run makeinfo'
 MKDIR_P='/bin/mkdir -p'
 OBJEXT='o'
-OPENMP_CFLAGS='-fopenmp'
-OPENMP_LIBS='-fopenmp'
 PACKAGE='FBP_optics'
 PACKAGE_BUGREPORT='phyjpb@leeds.ac.uk'
 PACKAGE_NAME='FBP_optics'
@@ -291,12 +217,9 @@ SET_MAKE=''
 SHELL='/bin/bash'
 STRIP=''
 VERSION='0.1'
-ac_ct_CC='gcc'
 ac_ct_CXX='g++'
 am__EXEEXT_FALSE=''
 am__EXEEXT_TRUE='#'
-am__fastdepCC_FALSE='#'
-am__fastdepCC_TRUE=''
 am__fastdepCXX_FALSE='#'
 am__fastdepCXX_TRUE=''
 am__include='include'
@@ -346,3 +269,21 @@ target_alias=''
 #define PACKAGE_URL "http://mpi.leeds.ac.uk/"
 
 configure: exit 0
+
+## ---------------------- ##
+## Running config.status. ##
+## ---------------------- ##
+
+This file was extended by FBP_optics config.status 0.1, which was
+generated by GNU Autoconf 2.68.  Invocation command line was
+
+  CONFIG_FILES    = 
+  CONFIG_HEADERS  = 
+  CONFIG_LINKS    = 
+  CONFIG_COMMANDS = 
+  $ ./config.status config.h
+
+on phy-pc3089
+
+config.status:845: creating config.h
+config.status:1026: config.h is unchanged

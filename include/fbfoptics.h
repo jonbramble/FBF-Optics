@@ -5,9 +5,22 @@
  *      Author: Jonathan Bramble
  */
 
+
 #ifndef FBFOPTICS_H_
 #define FBFOPTICS_H_
 
+
+
+
+
+
+
+
+
+
+
+
+/*
 #include <stdio.h>
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_matrix.h>
@@ -25,5 +38,9 @@ double rpp(gsl_matrix_complex * M);
 void gtmiso(gsl_matrix_complex * Tiso, gsl_complex eiso, double k0, double eta, double diso);
 void gtm(gsl_matrix_complex * T, gsl_matrix * Delta, double k0, double h);
 void expm(gsl_matrix_complex * L, gsl_complex t, gsl_matrix * m);
-
+*/
 #endif /* FBFOPTICS_H_ */
+
+
+
+

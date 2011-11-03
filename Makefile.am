@@ -12,15 +12,15 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 ## directory named by the predefined variable $(bindir).
 bin_PROGRAMS = FBF_Optics
 
-AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
-FBF_Optics_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(OPENMP_LIBS)
+#AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
+#FBF_Optics_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(OPENMP_LIBS)
 
 ## Define the list of source files for the "hello" target. The file extension
 ## .cc is recognized by Automake, and causes it to produce rules which invoke
 ## the C++ compiler to produce an object file (.o) from each source file. The
 ## header files (.h) do not result in object files by themselves, but will be
 ## included in distribution archives of the project.
-FBF_Optics_SOURCES = src/main.cc
+FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc include/fbfoptics.hpp
 
 ## Define an independent executable script for inclusion in the distribution
 ## archive. It will not be installed on an end user's system, however.
