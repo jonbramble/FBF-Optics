@@ -190,6 +190,7 @@ on phy-pc3089
 
 config.status:857: creating Makefile
 config.status:857: creating config.h
+config.status:1038: config.h is unchanged
 config.status:1086: executing depfiles commands
 
 ## ---------------- ##

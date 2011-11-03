@@ -8,7 +8,57 @@
 //gtm
 //outs
 
+#include "../include/fbfoptics.hpp"
+
+Fbfoptics::Fbfoptics() {
+	ILa = zero_matrix<complex<double> >(4,4); 
+	Lf = zero_matrix<complex<double> >(4,4);
+	
+}
+
+void Fbfoptics::incmat(double na, double cphia){
+	ILa(0,2) = complex<double>(0.5,0);
+	ILa(0,3) = complex<double>(1/(2*na*cphia),0);
+	ILa(1,2) = complex<double>(0.5,0);
+	ILa(1,3) = complex<double>(-1/(2*na*cphia),0);
+	ILa(2,0) = complex<double>(1/(2*cphia),0);
+	ILa(2,1) = complex<double>(1/(2*na),0);
+	ILa(3,0) = complex<double>(-1/(2*cphia),0);
+	ILa(3,1) = complex<double>(1/(2*na),0);	
+}
+
+void Fbfoptics::extmat(double nf, complex<double> cphif)
+{
+	complex<double> znf= complex<double>(nf,0.0);
+	complex<double> zk = znf*cphif;
+	
+	Lf(0,2) = cphif;
+	Lf(1,2) = znf;
+	Lf(2,0) = complex<double>(1.0,0.0);
+	Lf(3,0) = zk;
+}
+
+
+/*
 #include "fbfoptics.h"
+
+int extmat(gsl_matrix_complex * Lf, double nf, gsl_complex cphif)
+{
+	gsl_matrix_complex_set_zero(Lf);
+	gsl_complex znf = gsl_complex_rect(nf,0);
+	gsl_complex zk = gsl_complex_mul(znf,cphif);
+	gsl_complex one = gsl_complex_rect(1,0);
+
+	gsl_matrix_complex_set(Lf,0,2,cphif);
+	gsl_matrix_complex_set(Lf,1,2,znf);
+	gsl_matrix_complex_set(Lf,2,0,one);
+	gsl_matrix_complex_set(Lf,3,0,zk);
+
+	return 1;
+
+}
+
+
 
 int incmat(gsl_matrix_complex * ILa, double na, double cphia)
 {
@@ -102,21 +152,7 @@ int dietens(gsl_matrix * ep, double eav, double dem, double S, double stheta, do
 	return 1;
 }
 
-int extmat(gsl_matrix_complex * Lf, double nf, gsl_complex cphif)
-{
-	gsl_matrix_complex_set_zero(Lf);
-	gsl_complex znf = gsl_complex_rect(nf,0);
-	gsl_complex zk = gsl_complex_mul(znf,cphif);
-	gsl_complex one = gsl_complex_rect(1,0);
 
-	gsl_matrix_complex_set(Lf,0,2,cphif);
-	gsl_matrix_complex_set(Lf,1,2,znf);
-	gsl_matrix_complex_set(Lf,2,0,one);
-	gsl_matrix_complex_set(Lf,3,0,zk);
-
-	return 1;
-
-}
 
 void gtmiso(gsl_matrix_complex * Tiso, gsl_complex eiso, double k0, double eta, double diso)
 {
@@ -300,4 +336,6 @@ void expm(gsl_matrix_complex * L, gsl_complex t, gsl_matrix * m)
 	gsl_matrix_complex_free(evalmat);
 	gsl_matrix_complex_free(K);
 }
+
+*/
 
