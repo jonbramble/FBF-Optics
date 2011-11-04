@@ -31,6 +31,8 @@ public:
 	void extmat(const double, const complex<double>, matrix<complex<double> >&);
 	void dietens(const double,const double,const double,const double,const double,const double, const double, matrix<double>&);
 	void gtmiso(const complex<double>,const double,const double,const double, matrix<complex<double> >&);
+	void diffpropmat(const matrix<double> ep, const double eta, matrix<double>& Delta);
+	double rpp(const matrix<complex<double> >& M);
 };
 
 

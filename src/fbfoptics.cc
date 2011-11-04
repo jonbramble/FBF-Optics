@@ -74,15 +74,169 @@ void Fbfoptics::dietens(double eav, double dem, double S, double stheta, double 
 void Fbfoptics::gtmiso(const complex<double> eiso, const double k0, const double eta, const double diso, matrix<complex<double> >& Tiso)
 {
 	double eta2 = pow(eta,2);
-	complex<double> za, qiso, zb, zc, zd, carg, sarg, i, one;
+	complex<double> rb, za, qiso, zb, zc, zd, carg, sarg;
 
-	za = complex_sub_real(eiso,eta2);
+	rb = complex<double>(eta2,0);
+
+	za = eiso-eta2;
+	//za = complex_sub_real(eiso,eta2);
+	qiso = sqrt(za);
+	zb = qiso*k0;
+	zc = zb*diso;
+	zd= rb/eiso;
+
+	carg = cos(zc);
+	sarg = sin(zc);
+
+	static const complex<double> zero = complex<double>(0.0,0.0);
+	static const complex<double> i = complex<double>(0.0,1.0);
+	static const complex<double> one = complex<double>(1.0,0.0);
 	
+	matrix<complex<double> > T(4,4);
 
+	T(0,2) = zero;
+	T(0,3) = zero;
+	T(1,2) = zero;
+	T(1,3) = zero;
+	T(2,0) = zero;
+	T(2,1) = zero;	
+	T(3,0) = zero;
+	T(3,1) = zero;
+	
+	T(0,0) = carg; 
+	T(1,1) = carg; 
+	T(2,2) = carg; 
+	T(3,3) = carg; 
+
+	T(0,1) = ((i*(one-zd))/qiso)*sarg; 
+	T(1,0) = ((i*eiso)/qiso)*sarg; 
+	T(2,3) = ((i*one)/qiso)*sarg; 
+	T(3,2) = ((i*(eiso-eta2))/qiso)*sarg; 
+
+	Tiso = T;
+}
+
+void Fbfoptics::diffpropmat(const matrix<double> ep, const double eta, matrix<double>& Delta)
+{
+	double zb[10];
+	double eta2 = pow(eta,2);
+
+	double ep31,ep33,ep32,ep13,ep22,ep11,ep12,ep21,ep23;
+
+	ep11 = ep(0,0);
+	ep12 = ep(0,1);
+	ep13 = ep(0,2);
+	ep21 = ep(1,0);
+	ep22 = ep(1,1);
+	ep23 = ep(1,2);
+	ep31 = ep(2,0);
+	ep32 = ep(3,1);
+	ep33 = ep(3,2);
+
+	zb[0] = -eta*ep31/ep33;
+	zb[1] = 1-eta2/ep33;
+	zb[2] = -eta*ep32/ep33;
+	zb[3] = ep11-(ep13*ep31)/ep33;
+	zb[4] = -eta*ep13/ep33;
+	zb[5] = ep11-(ep12*ep32)/ep33;
+	zb[6] = 1.0;
+	zb[7] = ep21-(ep31*ep23)/ep33;
+	zb[8] = -eta*ep23/ep33;
+	zb[9] = ep11-(ep13*ep31)/ep33-eta2;
+
+	Delta(0,0)=zb[0];
+	Delta(0,1)=zb[1];
+	Delta(0,2)=zb[2];
+	Delta(0,3)=0;
+	Delta(1,0)=zb[3];
+	Delta(1,1)=zb[4];
+	Delta(1,2)=zb[5];
+	Delta(1,3)=0;
+	Delta(2,0)=0;
+	Delta(2,1)=0;
+	Delta(2,2)=0;
+	Delta(2,3)=zb[6];
+	Delta(3,0)=zb[7];
+	Delta(3,1)=zb[8];
+	Delta(3,2)=zb[9];
+	Delta(3,3)=0;
+}
+
+double Fbfoptics::rpp(const matrix<complex<double> >& M)
+{
+	complex<double> zr;
+	zr = ((M(0,0)*M(3,2))*(M(3,0)*M(0,2)))/((M(0,0)*M(2,2))*(M(0,2)*M(2,0)));
+	double r = pow(abs(zr),2);
+	return r;
 }
 
 
 /*
+
+double rpp(gsl_matrix_complex * M)
+{
+	gsl_complex t11, t43, t41, t13, t33, t31, mul1, mul2, mul3, mul4, sub1, sub2, div1;
+	t11 = gsl_matrix_complex_get(M,0,0);
+	t43 = gsl_matrix_complex_get(M,3,2);
+	t41 = gsl_matrix_complex_get(M,3,0);
+	t13 = gsl_matrix_complex_get(M,0,2);
+	t33 = gsl_matrix_complex_get(M,2,2);
+	t31 = gsl_matrix_complex_get(M,2,0);
+
+	mul1 = gsl_complex_mul(t11,t43);
+	mul2 = gsl_complex_mul(t41,t13);
+	mul3 = gsl_complex_mul(t11,t33);
+	mul4 = gsl_complex_mul(t13,t31);
+
+	sub1 = gsl_complex_sub(mul1,mul2);
+	sub2 = gsl_complex_sub(mul3,mul4);
+
+	div1 = gsl_complex_div(sub1,sub2);
+
+	return gsl_complex_abs2(div1);
+}
+
+void diffpropmat(gsl_matrix * Delta, gsl_matrix * ep, double eta)
+{
+		double zb[10];
+		double eta2 = pow(eta,2);
+
+		double ep31,ep33,ep32,ep13,ep22,ep11,ep12,ep21,ep23;
+
+		ep11 = gsl_matrix_get(ep,0,0);
+		ep12 = gsl_matrix_get(ep,0,1);
+		ep13 = gsl_matrix_get(ep,0,2);
+		ep21 = gsl_matrix_get(ep,1,0);
+		ep22 = gsl_matrix_get(ep,1,1);
+		ep23 = gsl_matrix_get(ep,1,2);
+		ep31 = gsl_matrix_get(ep,2,0);
+		ep32 = gsl_matrix_get(ep,3,1);
+		ep33 = gsl_matrix_get(ep,3,2);
+
+		zb[0] = -eta*ep31/ep33;
+		zb[1] = 1-eta2/ep33;
+		zb[2] = -eta*ep32/ep33;
+		zb[3] = ep11-(ep13*ep31)/ep33;
+		zb[4] = -eta*ep13/ep33;
+		zb[5] = ep11-(ep12*ep32)/ep33;
+		zb[6] = 1.0;
+		zb[7] = ep21-(ep31*ep23)/ep33;
+		zb[8] = -eta*ep23/ep33;
+		zb[9] = ep11-(ep13*ep31)/ep33-eta2;
+
+		gsl_matrix_set_zero(Delta);
+
+		gsl_matrix_set(Delta,0,0,zb[0]);
+		gsl_matrix_set(Delta,0,1,zb[1]);
+		gsl_matrix_set(Delta,0,2,zb[2]);
+		gsl_matrix_set(Delta,1,0,zb[3]);
+		gsl_matrix_set(Delta,1,1,zb[4]);
+		gsl_matrix_set(Delta,1,2,zb[5]);
+		gsl_matrix_set(Delta,2,3,zb[6]);
+		gsl_matrix_set(Delta,3,0,zb[7]);
+		gsl_matrix_set(Delta,3,1,zb[8]);
+		gsl_matrix_set(Delta,3,2,zb[9]);
+}
 
 void gtmiso(gsl_matrix_complex * Tiso, gsl_complex eiso, double k0, double eta, double diso)
 {
@@ -255,47 +409,7 @@ int incmat(gsl_matrix_complex * ILa, double na, double cphia)
 
 
 
-void diffpropmat(gsl_matrix * Delta, gsl_matrix * ep, double eta)
-{
-		double zb[10];
-		double eta2 = pow(eta,2);
 
-		double ep31,ep33,ep32,ep13,ep22,ep11,ep12,ep21,ep23;
-
-		ep11 = gsl_matrix_get(ep,0,0);
-		ep12 = gsl_matrix_get(ep,0,1);
-		ep13 = gsl_matrix_get(ep,0,2);
-		ep21 = gsl_matrix_get(ep,1,0);
-		ep22 = gsl_matrix_get(ep,1,1);
-		ep23 = gsl_matrix_get(ep,1,2);
-		ep31 = gsl_matrix_get(ep,2,0);
-		ep32 = gsl_matrix_get(ep,3,1);
-		ep33 = gsl_matrix_get(ep,3,2);
-
-		zb[0] = -eta*ep31/ep33;
-		zb[1] = 1-eta2/ep33;
-		zb[2] = -eta*ep32/ep33;
-		zb[3] = ep11-(ep13*ep31)/ep33;
-		zb[4] = -eta*ep13/ep33;
-		zb[5] = ep11-(ep12*ep32)/ep33;
-		zb[6] = 1.0;
-		zb[7] = ep21-(ep31*ep23)/ep33;
-		zb[8] = -eta*ep23/ep33;
-		zb[9] = ep11-(ep13*ep31)/ep33-eta2;
-
-		gsl_matrix_set_zero(Delta);
-
-		gsl_matrix_set(Delta,0,0,zb[0]);
-		gsl_matrix_set(Delta,0,1,zb[1]);
-		gsl_matrix_set(Delta,0,2,zb[2]);
-		gsl_matrix_set(Delta,1,0,zb[3]);
-		gsl_matrix_set(Delta,1,1,zb[4]);
-		gsl_matrix_set(Delta,1,2,zb[5]);
-		gsl_matrix_set(Delta,2,3,zb[6]);
-		gsl_matrix_set(Delta,3,0,zb[7]);
-		gsl_matrix_set(Delta,3,1,zb[8]);
-		gsl_matrix_set(Delta,3,2,zb[9]);
-}
 
 double rpp(gsl_matrix_complex * M)
 {

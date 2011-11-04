@@ -37,6 +37,7 @@ int main(int argc, char* argv[]) {
 	test.extmat(2.0,5.0,Lf);
 
 	test.dietens(1,1,1,0.1,0.1,0.1,0.1,ep);
+	//test.gtmiso(
 
 	R = prod (ILa, Lf);
 	
