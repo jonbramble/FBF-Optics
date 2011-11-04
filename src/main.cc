@@ -8,45 +8,60 @@ using namespace boost::numeric::ublas;
 
 int main(int argc, char* argv[]) {
 
-	Fbfoptics test;
+	Fbfoptics spr;
+	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tau(4,4);
 
-	/*
-	matrix<double> m1 (3, 3), m2 (3, 3), m3(3,3), Ap(3,3);
-    	for (unsigned i = 0; i < std::min (m1.size1 (), m2.size1 ()); ++ i)
-        for (unsigned j = 0; j < std::min (m1.size2 (), m2.size2 ()); ++ j)
-            m1 (i, j) = m2 (i, j) = 3 * i + j;
+	static const complex<double> one = complex<double>(1,0);
+	static const complex<double> zero = complex<double>(0,0);
+	complex<double>	result, zcphif2, cphif;
 
-	cout << m2 << endl;
+	zero_matrix<complex<double> > zmatrix(4,4);
 
-	bool a = InvertMatrix(m2,Ap);
-	
-	cout << a << endl;
+	double phia, cphia, eta;
 
-    	cout << Ap << endl;
-	cout << prod(Ap,m2) << endl;
+	static const complex<double> eau = complex<double>(-12.0,0.8);
+	static const double dau = 49e-9;
 
-	//m3 = prod (m1, m2);
+	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
 
-	//std::cout << m3 << std::endl;
-    	//std::cout << prod (m1, m2) << std::endl;*/
+	double k0 = (2*s_pi)/633e-9; // laser wavevector
 
-	matrix<complex<double> > R(4,4), ILa(4,4), Lf(4,4);
-	matrix<double> ep(3,3);
+	double na = 1.85;  // prism index
+	double nf = 1.333; // water index
 
-	test.incmat(2.0,5.0,ILa);
-	test.extmat(2.0,5.0,Lf);
+	int k;
 
-	test.dietens(1,1,1,0.1,0.1,0.1,0.1,ep);
-	//test.gtmiso(
+	static const int N = 10;
 
-	R = prod (ILa, Lf);
-	
-	std::cout << ILa << std::endl;	
-	std::cout << Lf << std::endl;
-	
-	std::cout << R << std::endl;
-	std::cout << prod(ILa,Lf) << std::endl;
-	
+	//can we thread by breaking into parts
+	for(k=0;k<10;k++)
+	{
+		phia = 0+k*((M_PI/2)/N); //input angle
+
+		cphia = cos(phia); 
+		eta = na*sin(phia); // x comp of wavevector
+		zcphif2 = complex<double>(1-pow((na/nf)*sin(phia),2),0);
+
+		cphif = sqrt(zcphif2);
+
+		cout << cphif << endl;
+
+		spr.incmat(na,cphia,ILa);
+		spr.extmat(nf, cphif, Lf);
+
+		spr.gtmiso(eau,k0,eta,-dau,Tau);
+		
+		
+
+		Temp = prod(ILa,Tau);
+		T = prod(Temp,Lf);
+
+		cout << T << endl;
+		
+		//cout << phia << " " << spr.rpp(T) << endl;  // output result here
+
+		T = zmatrix;// reset T for loop
+	}
+
 	return 0;
-
 }

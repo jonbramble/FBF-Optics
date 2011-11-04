@@ -19,6 +19,7 @@
 
 #include <complex>
 #include "complex_methods.hpp"
+#include "expm.hpp"
 
 using namespace boost::numeric::ublas;
 using namespace std;
@@ -33,6 +34,7 @@ public:
 	void gtmiso(const complex<double>,const double,const double,const double, matrix<complex<double> >&);
 	void diffpropmat(const matrix<double> ep, const double eta, matrix<double>& Delta);
 	double rpp(const matrix<complex<double> >& M);
+	void gtm(const matrix<double>& Delta, const double k0, const double h, matrix<complex<double> >& T);
 };
 
 
