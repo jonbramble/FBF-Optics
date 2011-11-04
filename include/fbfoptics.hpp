@@ -18,6 +18,7 @@
 #include <boost/numeric/ublas/lu.hpp>
 
 #include <complex>
+#include "complex_methods.hpp"
 
 using namespace boost::numeric::ublas;
 using namespace std;

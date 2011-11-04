@@ -485,7 +485,8 @@ src/main.o: src/main.cc config.h src/../include/fbfoptics.hpp \
  /usr/include/boost/numeric/ublas/triangular.hpp \
  /usr/include/boost/numeric/ublas/lu.hpp \
  /usr/include/boost/numeric/ublas/operation.hpp \
- /usr/include/boost/numeric/ublas/matrix_proxy.hpp
+ /usr/include/boost/numeric/ublas/matrix_proxy.hpp \
+ src/../include/complex_methods.hpp
 
 config.h:
 
@@ -1578,3 +1579,5 @@ src/../include/fbfoptics.hpp:
 /usr/include/boost/numeric/ublas/operation.hpp:
 
 /usr/include/boost/numeric/ublas/matrix_proxy.hpp:
+
+src/../include/complex_methods.hpp:

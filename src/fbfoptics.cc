@@ -57,6 +57,8 @@ void Fbfoptics::dietens(double eav, double dem, double S, double stheta, double 
 
 	ea = prod(A,epsilon);
 
+	// move to external implementation for clarity
+
 	//inverse http://www.crystalclearsoftware.com/cgi-bin/boost_wiki/wiki.pl?LU_Matrix_Inversion
 	typedef permutation_matrix<std::size_t> pmatrix;
  	matrix<double> wc(A); // create a working copy of the input
@@ -74,7 +76,7 @@ void Fbfoptics::gtmiso(const complex<double> eiso, const double k0, const double
 	double eta2 = pow(eta,2);
 	complex<double> za, qiso, zb, zc, zd, carg, sarg, i, one;
 
-	za = complex<double>(real(eiso)-eta2,imag(eiso));
+	za = complex_sub_real(eiso,eta2);
 	
 
 }
