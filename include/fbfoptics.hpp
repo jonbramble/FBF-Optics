@@ -37,13 +37,6 @@ public:
 	void gtm(const matrix<double>& Delta, const double k0, const double h, matrix<complex<double> >& T);
 };
 
-
-
-
-
-
-
-
 /*
 #include <stdio.h>
 #include <gsl/gsl_math.h>
