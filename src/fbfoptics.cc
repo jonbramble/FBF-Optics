@@ -154,7 +154,7 @@ void Fbfoptics::diffpropmat(const matrix<double> ep, const double eta, matrix<do
 double Fbfoptics::rpp(const matrix<complex<double> >& M)
 {
 	complex<double> zr;
-	zr = ((M(0,0)*M(3,2))*(M(3,0)*M(0,2)))/((M(0,0)*M(2,2))*(M(0,2)*M(2,0)));
+	zr = ((M(0,0)*M(3,2))-(M(3,0)*M(0,2)))/((M(0,0)*M(2,2))-(M(0,2)*M(2,0)));
 	double r = pow(abs(zr),2);
 	return r;
 }

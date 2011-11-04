@@ -31,10 +31,10 @@ int main(int argc, char* argv[]) {
 
 	int k;
 
-	static const int N = 2;
+	static const int N = 500;
 
 	//can we thread by breaking into parts
-	for(k=1;k<N;k++)
+	for(k=0;k<N;k++)
 	{
 		phia = 0+k*((M_PI/2)/N); //input angle
 
@@ -47,16 +47,12 @@ int main(int argc, char* argv[]) {
 		spr.incmat(na,cphia,ILa);
 		spr.extmat(nf, cphif, Lf);
 
-		cout << ILa << endl;
-		cout << Lf << endl;
-
 		spr.gtmiso(eau,k0,eta,-dau,Tau);
 
-		Temp = prod(ILa,Lf);
-		//T = prod(Temp,Lf);
-		//cout << T << endl;
+		Temp = prod(ILa,Tau);
+		T = prod(Temp,Lf);
 	
-		cout << phia << " " << spr.rpp(Temp) << endl;  // output result here
+		cout << phia << " " << spr.rpp(T) << endl;  // output result here
 		T = zmatrix; // reset T for loop
 	}
 
