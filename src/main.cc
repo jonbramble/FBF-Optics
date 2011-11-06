@@ -10,18 +10,21 @@ using namespace boost::numeric::ublas;
 
 int main(int argc, char* argv[]) {
 
-	int N = 100;
-	int nlayers = 1;
+	const int N = 5000;
+	int nlayers = 2;
 
 	boost::numeric::ublas::vector<double> result(N);
 	std::vector<Isolayer> vlayers(nlayers);
 
-	Isolayer gold;
+	Isolayer gold, SAM;
 	gold.seteps(complex<double>(-12.0,0.8));
 	gold.setd(49e-9);
 
-	vlayers.push_back(gold);
+	SAM.seteps(complex<double>(2.10,0));
+	SAM.setd(20e-9);
 
+	vlayers.push_back(gold);
+	vlayers.push_back(SAM);
 
 	Spr experiment(N);
 	
@@ -29,16 +32,14 @@ int main(int argc, char* argv[]) {
 	experiment.setendangle(80);
 	experiment.setna(1.85);
 	experiment.setnf(1.33);
-	experiment.setlayers(vlayers);
-	
 	experiment.setlambda(633e-9);
-	
+	experiment.setnlayers(nlayers);
+
+	experiment.setlayers(vlayers);
 	experiment.run();  //error handling required
 	experiment.getdata(result);
 	
-	cout << result << endl;
-	
-	// do something with data
+	//cout << result << endl;
 	
 	return 0;
 }
