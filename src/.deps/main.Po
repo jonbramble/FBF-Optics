@@ -1,5 +1,5 @@
-src/main.o: src/main.cc config.h src/../include/fbfoptics.hpp \
- /usr/include/boost/numeric/ublas/matrix.hpp \
+src/main.o: src/main.cc config.h src/../include/spr.hpp \
+ src/../include/fbfoptics.hpp /usr/include/boost/numeric/ublas/matrix.hpp \
  /usr/include/boost/numeric/ublas/vector.hpp \
  /usr/include/boost/numeric/ublas/storage.hpp \
  /usr/include/c++/4.6/algorithm /usr/include/c++/4.6/utility \
@@ -486,9 +486,12 @@ src/main.o: src/main.cc config.h src/../include/fbfoptics.hpp \
  /usr/include/boost/numeric/ublas/lu.hpp \
  /usr/include/boost/numeric/ublas/operation.hpp \
  /usr/include/boost/numeric/ublas/matrix_proxy.hpp \
- src/../include/complex_methods.hpp src/../include/expm.hpp
+ src/../include/complex_methods.hpp src/../include/expm.hpp \
+ src/../include/isolayer.hpp src/../include/isolayer.hpp
 
 config.h:
+
+src/../include/spr.hpp:
 
 src/../include/fbfoptics.hpp:
 
@@ -1583,3 +1586,7 @@ src/../include/fbfoptics.hpp:
 src/../include/complex_methods.hpp:
 
 src/../include/expm.hpp:
+
+src/../include/isolayer.hpp:
+
+src/../include/isolayer.hpp:

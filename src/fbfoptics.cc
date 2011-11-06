@@ -10,10 +10,6 @@
 
 #include "../include/fbfoptics.hpp"
 
-Fbfoptics::Fbfoptics() {
-	
-}
-
 void Fbfoptics::incmat(const double na, const double cphia, matrix<complex<double> >& ILa){
 	ILa(0,2) = complex<double>(0.5,0);
 	ILa(0,3) = complex<double>(1/(2*na*cphia),0);

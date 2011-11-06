@@ -9,5 +9,6 @@
 
 
 void Isolayer::seteps(complex<double> _eps){ eps = _eps; }
+std::complex<double> Isolayer::geteps(){ return eps; }
 void Isolayer::setd(double _d){ d = _d; }
 double Isolayer::getd(){ return d; }

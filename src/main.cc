@@ -2,59 +2,43 @@
 #include <config.h>
 #endif
 
-#include "../include/fbfoptics.hpp"
-using namespace boost::numeric::ublas;
+#include "../include/spr.hpp"
+#include "../include/isolayer.hpp"
 
+
+using namespace boost::numeric::ublas;
 
 int main(int argc, char* argv[]) {
 
-	Fbfoptics spr;
-	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tau(4,4);
+	int N = 100;
+	int nlayers = 1;
 
-	static const complex<double> one = complex<double>(1,0);
-	static const complex<double> zero = complex<double>(0,0);
-	complex<double>	result, zcphif2, cphif;
+	boost::numeric::ublas::vector<double> result(N);
+	std::vector<Isolayer> vlayers(nlayers);
 
-	zero_matrix<complex<double> > zmatrix(4,4);
+	Isolayer gold;
+	gold.seteps(complex<double>(-12.0,0.8));
+	gold.setd(49e-9);
 
-	double phia, cphia, eta;
+	vlayers.push_back(gold);
 
-	static const complex<double> eau = complex<double>(-12.0,0.8);
-	static const double dau = 49e-9;
 
-	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
-
-	double k0 = (2*s_pi)/633e-9; // laser wavevector
-
-	double na = 1.85;  // prism index
-	double nf = 1.333; // water index
-
-	int k;
-
-	static const int N = 500;
-
-	//can we thread by breaking into parts
-	for(k=0;k<N;k++)
-	{
-		phia = 0+k*((M_PI/2)/N); //input angle
-
-		cphia = cos(phia); 
-		eta = na*sin(phia); // x comp of wavevector
-		zcphif2 = complex<double>(1-pow((na/nf)*sin(phia),2),0);
-
-		cphif = sqrt(zcphif2);
-
-		spr.incmat(na,cphia,ILa);
-		spr.extmat(nf, cphif, Lf);
-
-		spr.gtmiso(eau,k0,eta,-dau,Tau);
-
-		Temp = prod(ILa,Tau);
-		T = prod(Temp,Lf);
+	Spr experiment(N);
 	
-		cout << phia << " " << spr.rpp(T) << endl;  // output result here
-		T = zmatrix; // reset T for loop
-	}
-
+	experiment.setstartangle(10); //not implemented yet
+	experiment.setendangle(80);
+	experiment.setna(1.85);
+	experiment.setnf(1.33);
+	experiment.setlayers(vlayers);
+	
+	experiment.setlambda(633e-9);
+	
+	experiment.run();  //error handling required
+	experiment.getdata(result);
+	
+	cout << result << endl;
+	
+	// do something with data
+	
 	return 0;
 }

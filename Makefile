@@ -51,7 +51,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_FBF_Optics_OBJECTS = src/main.$(OBJEXT) src/fbfoptics.$(OBJEXT)
+am_FBF_Optics_OBJECTS = src/main.$(OBJEXT) src/fbfoptics.$(OBJEXT) \
+	src/spr.$(OBJEXT) src/isolayer.$(OBJEXT)
 FBF_Optics_OBJECTS = $(am_FBF_Optics_OBJECTS)
 FBF_Optics_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.
@@ -170,7 +171,7 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 #AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
 #FBF_Optics_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(OPENMP_LIBS)
-FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc include/fbfoptics.hpp
+FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -273,6 +274,9 @@ src/$(DEPDIR)/$(am__dirstamp):
 src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/fbfoptics.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/spr.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/isolayer.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 FBF_Optics$(EXEEXT): $(FBF_Optics_OBJECTS) $(FBF_Optics_DEPENDENCIES) 
 	@rm -f FBF_Optics$(EXEEXT)
 	$(CXXLINK) $(FBF_Optics_OBJECTS) $(FBF_Optics_LDADD) $(LIBS)
@@ -280,13 +284,17 @@ FBF_Optics$(EXEEXT): $(FBF_Optics_OBJECTS) $(FBF_Optics_DEPENDENCIES)
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f src/fbfoptics.$(OBJEXT)
+	-rm -f src/isolayer.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
+	-rm -f src/spr.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
 include src/$(DEPDIR)/fbfoptics.Po
+include src/$(DEPDIR)/isolayer.Po
 include src/$(DEPDIR)/main.Po
+include src/$(DEPDIR)/spr.Po
 
 .cc.o:
 	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
