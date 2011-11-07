@@ -13,7 +13,7 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 bin_PROGRAMS = FBF_Optics
 
 #AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
-#FBF_Optics_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(OPENMP_LIBS)
+FBF_Optics_LDADD = $(TINYXML_LIBS)
 
 ## Define the list of source files for the "hello" target. The file extension
 ## .cc is recognized by Automake, and causes it to produce rules which invoke

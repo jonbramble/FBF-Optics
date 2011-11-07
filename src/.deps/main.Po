@@ -487,7 +487,13 @@ src/main.o: src/main.cc config.h src/../include/spr.hpp \
  /usr/include/boost/numeric/ublas/operation.hpp \
  /usr/include/boost/numeric/ublas/matrix_proxy.hpp \
  src/../include/complex_methods.hpp src/../include/expm.hpp \
- src/../include/isolayer.hpp src/../include/isolayer.hpp
+ src/../include/isolayer.hpp src/../include/isolayer.hpp \
+ /usr/include/c++/4.6/cstdio /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio2.h /usr/include/tinyxml.h \
+ /usr/include/string.h /usr/include/x86_64-linux-gnu/bits/string3.h
 
 config.h:
 
@@ -1590,3 +1596,23 @@ src/../include/expm.hpp:
 src/../include/isolayer.hpp:
 
 src/../include/isolayer.hpp:
+
+/usr/include/c++/4.6/cstdio:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:
+
+/usr/include/tinyxml.h:
+
+/usr/include/string.h:
+
+/usr/include/x86_64-linux-gnu/bits/string3.h:

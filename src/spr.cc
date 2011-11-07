@@ -36,8 +36,11 @@ void Spr::run()
 	static const complex<double> one = complex<double>(1,0); // can I define these elsewhere
 	static const complex<double> zero = complex<double>(0,0);
 
-	static const complex<double> eau = complex<double>(-12.0,0.8);
-	static const double dau = 49e-9;
+	//static const complex<double> eau = complex<double>(-12.0,0.8);
+	//static const double dau = 49e-9;
+	complex<double> eps;
+	double d;
+	
 	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
 
 	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tli(4,4);
@@ -83,15 +86,15 @@ void Spr::run()
 			//cout << "size > 1" << endl;
 			int pen = (size-1);
 			
-			complex<double> eps = vlayers[pen].geteps();
-			double d = -1*vlayers[pen].getd(); // -ve sign is for optics reasons see shubert paper
+			eps = vlayers[pen].geteps();
+			d = -1*vlayers[pen].getd(); // -ve sign is for optics reasons see shubert paper
 			Fbfoptics::gtmiso(eps,k0,eta,d,Tli); // could change gtmiso to take vlayer as argument - for iso or no iso layers
 			Temp = prod(Tli,Lf);
 
-			for( unsigned int i=pen; i==0; --i)  //better with reverse iterator
+			for( unsigned int i=(pen-1); i==0; --i)  //better with reverse iterator
 			{
-				complex<double> eps = vlayers[i].geteps();
-				double d = -1*vlayers[i].getd(); 
+				eps = vlayers[i].geteps();
+				d = -1*vlayers[i].getd(); 
 
 				Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
 				T = prod(Tli,Temp);

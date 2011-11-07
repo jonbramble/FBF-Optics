@@ -54,7 +54,8 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am_FBF_Optics_OBJECTS = src/main.$(OBJEXT) src/fbfoptics.$(OBJEXT) \
 	src/spr.$(OBJEXT) src/isolayer.$(OBJEXT)
 FBF_Optics_OBJECTS = $(am_FBF_Optics_OBJECTS)
-FBF_Optics_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+FBF_Optics_DEPENDENCIES = $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -123,6 +124,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+TINYXML_LIBS = @TINYXML_LIBS@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -170,7 +172,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 #AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
-#FBF_Optics_LDADD = $(GSL_LIBS) $(CIMG_LIBS) $(OPENMP_LIBS)
+FBF_Optics_LDADD = $(TINYXML_LIBS)
 FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
