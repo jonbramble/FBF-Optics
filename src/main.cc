@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
 		TiXmlHandle docHandle(&doc);
 		TiXmlElement *job, *input;
 		TiXmlHandle hRoot(0);
-		TiXmlText *type;
+		//TiXmlText *type;
 		
 		job = docHandle.FirstChild("document").Element();
 		if(job)
@@ -84,12 +84,15 @@ int main(int argc, char* argv[]) {
 		}
 		//
 		
-		input = hRoot.FirstChild().Element();
+		input = hRoot.FirstChild("simulation").FirstChild("type").Element();
 		if(input)
 		{
 			cout << "loaded child element" << endl;	
-			type = hRoot.Text();
-			cout << type << endl;
+			// we now know we
+			
+			cout << input->FirstAttribute()->Name() << endl;
+			cout << input->FirstAttribute()->Value() << endl;
+			cout << input->FirstAttribute()->ValueStr() << endl;
 		}
 		
 

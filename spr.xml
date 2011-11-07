@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <document>
-<simulation>
-	<input>
+	<simulation>
 		<type simulation="spr">
 			<data_points>1000</data_points>
-			<nentry>1.85</nentry>
-			<nexit>1.33</nexit>
+			<n_entry>1.85</n_entry>
+			<n_exit>1.33</n_exit>
 			<layer type="isotropic">
 				<name>gold</name>
 				<epsreal>-12.0</epsreal>
@@ -14,6 +13,5 @@
 			</layer>
 		
 		</type>
-	</input>
-</simulation>
+	</simulation>
 </document>
