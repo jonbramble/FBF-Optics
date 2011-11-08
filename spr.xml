@@ -2,14 +2,14 @@
 <document>
 	<simulation>
 		<type simulation="spr">
-			<data_points>200</data_points>
+			<data_points>250</data_points>
 			<n_entry>1.85</n_entry>
 			<n_exit>1.33</n_exit>
 			<layer type="isotropic">
 				<name>gold</name>
 				<epsreal>-12.0</epsreal>
 				<epsimag>0.8</epsimag>
-				<d>49e-9</d>
+				<d>59e-9</d>
 			</layer>
 			
 		</type>

@@ -12,6 +12,8 @@ Spr::Spr(){
 Spr::Spr(int N){
 	data = boost::numeric::ublas::vector<double>(N);
 	setnpts(N);
+	//cout << "points: " << N << endl;
+	//cout << "datalen: "<< data.size() << endl;
 	// set defaults
 }
 
@@ -34,9 +36,6 @@ void Spr::getdata(boost::numeric::ublas::vector<double>& ret_data){
 void Spr::run()
 {
 	//make tests
-	complex<double> eps;
-	double d;
-	
 	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
 
 	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tli(4,4);
@@ -48,21 +47,18 @@ void Spr::run()
 
 	for(k=0;k<N;k++)
 	{
-		phia = 0+k*((s_pi/2)/N); //input angle
+		double radrng = ((endangle-sangle)*s_pi)/180;	
+		phia = sangle+k*(radrng/N); //input angle
 
 		cphia = cos(phia); 
 		eta = na*sin(phia); // x comp of wavevector
-		zcphif2 = complex<double>(1-pow((na/nf)*sin(phia),2),0);
-		//cphif = sqrt(zcphif2);
-		phif = boost::math::asin(complex<double>((na/nf)*sin(phia),0));
-		
-		cphif = cos(phif);
-
-		cout << cphif << endl;
-		cout << sqrt(zcphif2) << endl;
-
+		zcphif2 = complex<double>(1-pow((na/nf)*sin(phia),2),0);  // this always picks the correct sector
+		cphif = sqrt(zcphif2);
+		//phif = boost::math::asin(complex<double>((na/nf)*sin(phia),0));
+		//cphif = cos(phif);
 		Fbfoptics::incmat(na,cphia,ILa);
 		Fbfoptics::extmat(nf,cphif,Lf);
+	
 
 		if( size == 0 )
 		{
@@ -94,7 +90,7 @@ void Spr::run()
 			Fbfoptics::gtmiso(eps,k0,eta,d,Tli); // could change gtmiso to take vlayer as argument - for iso or no iso layers
 			Temp = prod(Tli,Lf);
 
-			for( unsigned int i=2; i<=0; ++i)  //better with reverse iterator --* wrong here
+			for( unsigned int i=2; i<1; ++i)  //better with reverse iterator --* wrong here
 			{
 				cout << "in sub loop" << endl;	
 				eps = vlayers[i].geteps();

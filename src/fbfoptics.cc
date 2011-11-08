@@ -11,14 +11,25 @@
 #include "../include/fbfoptics.hpp"
 
 void Fbfoptics::incmat(const double na, const double cphia, matrix<complex<double> >& ILa){
+	ILa(0,0) = complex<double>(0,0);
+	ILa(0,1) = complex<double>(0,0);
 	ILa(0,2) = complex<double>(0.5,0);
 	ILa(0,3) = complex<double>(1/(2*na*cphia),0);
+
+	ILa(1,0) = complex<double>(0,0);
+	ILa(1,1) = complex<double>(0,0);
 	ILa(1,2) = complex<double>(0.5,0);
 	ILa(1,3) = complex<double>(-1/(2*na*cphia),0);
+
 	ILa(2,0) = complex<double>(1/(2*cphia),0);
 	ILa(2,1) = complex<double>(1/(2*na),0);
+	ILa(2,2) = complex<double>(0,0);
+	ILa(2,3) = complex<double>(0,0);
+
 	ILa(3,0) = complex<double>(-1/(2*cphia),0);
 	ILa(3,1) = complex<double>(1/(2*na),0);	
+	ILa(3,2) = complex<double>(0,0);
+	ILa(3,3) = complex<double>(0,0);
 }
 
 void Fbfoptics::extmat(const double nf, const complex<double> cphif, matrix<complex<double> >& Lf)
@@ -26,10 +37,25 @@ void Fbfoptics::extmat(const double nf, const complex<double> cphif, matrix<comp
 	complex<double> znf= complex<double>(nf,0.0);
 	complex<double> zk = znf*cphif;
 	
+	Lf(0,0) = complex<double>(0,0);
+	Lf(0,1) = complex<double>(0,0);
 	Lf(0,2) = cphif;
+	Lf(0,3) = complex<double>(0,0);
+
+	Lf(1,0) = complex<double>(0,0);
+	Lf(1,1) = complex<double>(0,0);
 	Lf(1,2) = znf;
+	Lf(1,3) = complex<double>(0,0);
+
 	Lf(2,0) = complex<double>(1.0,0.0);
+	Lf(2,1) = complex<double>(0,0);
+	Lf(2,2) = complex<double>(0,0);
+	Lf(2,3) = complex<double>(0,0);
+
 	Lf(3,0) = zk;
+	Lf(3,1) = complex<double>(0,0);
+	Lf(3,2) = complex<double>(0,0);
+	Lf(3,3) = complex<double>(0,0);
 }
 
 void Fbfoptics::dietens(double eav, double dem, double S, double stheta, double ctheta, double sphi, double cphi, matrix<double>& ep)

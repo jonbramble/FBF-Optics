@@ -30,6 +30,8 @@ class Spr {
 	int N, size;
 	boost::numeric::ublas::vector<double> data; // how can i pass the ref to the 'main' data allocation?
 	std::vector<Isolayer> vlayers;
+	complex<double> eps;
+	double d;
 		
 		
 

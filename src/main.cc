@@ -124,14 +124,15 @@ int main(int argc, char* argv[]) {
 				experiment.setnlayers(layer_count);
 				experiment.setlayers(vlayers);
 
-				experiment.setstartangle(10); //not implemented yet
-				experiment.setendangle(80); //not implemented yet
+				experiment.setstartangle(0); 
+				experiment.setendangle(90);
 				experiment.setna(n_entry);
 				experiment.setnf(n_exit);
 				experiment.setlambda(633e-9); //not implemented yet
 
 				experiment.run();  //error handling required
 				experiment.getdata(result);
+				//cout << result << endl;
 				
 				cout << "Simulation Complete" << endl;
 
