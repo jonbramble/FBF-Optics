@@ -1,5 +1,6 @@
 #include "../include/spr.hpp"
 #include "../include/isolayer.hpp"
+#include <boost/math/complex/asin.hpp>
 
 Spr::Spr(){
 	data = boost::numeric::ublas::vector<double>(100);
@@ -39,7 +40,7 @@ void Spr::run()
 	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
 
 	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tli(4,4);
-	complex<double>	result, zcphif2, cphif;
+	complex<double>	result, zcphif2, phif, cphif;
 
 	double phia, cphia, eta;
 	double k0 = (2*s_pi)/lambda; // laser wavevector
@@ -52,8 +53,13 @@ void Spr::run()
 		cphia = cos(phia); 
 		eta = na*sin(phia); // x comp of wavevector
 		zcphif2 = complex<double>(1-pow((na/nf)*sin(phia),2),0);
+		//cphif = sqrt(zcphif2);
+		phif = boost::math::asin(complex<double>((na/nf)*sin(phia),0));
+		
+		cphif = cos(phif);
 
-		cphif = sqrt(zcphif2);
+		cout << cphif << endl;
+		cout << sqrt(zcphif2) << endl;
 
 		Fbfoptics::incmat(na,cphia,ILa);
 		Fbfoptics::extmat(nf,cphif,Lf);
@@ -93,8 +99,8 @@ void Spr::run()
 				cout << "in sub loop" << endl;	
 				eps = vlayers[i].geteps();
 				d = -1*vlayers[i].getd(); 
-				cout << eps << endl;
-				cout << d << endl;
+				//cout << eps << endl;
+				//cout << d << endl;
 
 				Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
 				T = prod(Tli,Temp);
