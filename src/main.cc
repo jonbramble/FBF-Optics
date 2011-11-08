@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
 		TiXmlElement *job, *input;
 		TiXmlHandle hRoot(0);
 		TiXmlHandle iRoot(0);
+		TiXmlHandle jRoot(0);
 		
 		std::string str_spr = "spr";		//different modes and experiments
 		std::string str_ewe = "ewe";
@@ -59,14 +60,17 @@ int main(int argc, char* argv[]) {
 			if(input->FirstAttribute()->Name() == str_sim && input->FirstAttribute()->Value() == str_spr)
 			{	
 				cout << "SPR Simulation Mode" << endl;			// we know it is this mode
-				cout << "Parsing data file...." << endl;
+				cout << "Parsing data file...." << endl;		// must do error handling on missing parameters
 				iRoot = TiXmlHandle(input);
 				TiXmlElement *sim, *layer_element;
 				
 				const char *read;
 				int N;
 				double n_entry, n_exit;
-				int layer_count = 1;
+				int layer_count = 0;
+				std::vector<Isolayer> vlayers(0);  // dont know size of array
+
+				cout << "Starting Simulation..." << endl;
 
 				sim = iRoot.FirstChild("data_points").Element();
 				read = sim->GetText();	
@@ -86,42 +90,38 @@ int main(int argc, char* argv[]) {
 				layer_element = iRoot.FirstChild("layer").Element();
 				for(layer_element;layer_element;layer_element=layer_element->NextSiblingElement())
 				{
-					cout << "Processing layer " << layer_count << endl;
+					jRoot=TiXmlHandle(layer_element);
+					double epsreal, epsimag, d;
+		
+					cout << "Processing layer " << layer_count+1 << endl;
 					const char* type = layer_element->FirstAttribute()->Value();					
-
-					Isolayer a_layer;
-
-					const char* name = layer_element.FirstChild("name").Element()->GetText();
-					cout << name << endl;
-					layer_element.FirstChild("epsreal").Element();
-					layer_element.FirstChild("epsimag").Element();
-					layer_element.FirstChild("d").Element();
 					
-			
+					Isolayer a_layer; //if isolayer
+
+					read = jRoot.FirstChild("name").Element()->GetText();
+					cout << "Layer Name: "<< read << endl;
+					
+					read = jRoot.FirstChild("epsreal").Element()->GetText();
+					epsreal= atof(read);
+					read = jRoot.FirstChild("epsimag").Element()->GetText();
+					epsimag= atof(read);
+					a_layer.seteps(complex<double>(epsreal,epsimag));
+
+					read = jRoot.FirstChild("d").Element()->GetText();
+					d = atof(read);
+					a_layer.setd(d);
+
+					vlayers.push_back(a_layer);
 
 					layer_count +=1;
 				}
 
-				cout << "Starting Simulation..." << endl;
-
-				int nlayers = 1;
-				boost::numeric::ublas::vector<double> result(N);
-				
-				std::vector<Isolayer> vlayers(nlayers);
-
-				Isolayer gold, SAM;
-				gold.seteps(complex<double>(-12.0,0.8));
-				gold.setd(49e-9);
-
-				//SAM.seteps(complex<double>(2.10,0));
-				//SAM.setd(2e-9);
-	
-				vlayers.push_back(gold);
-				//vlayers.push_back(SAM);
-
 				Spr experiment(N);
+				boost::numeric::ublas::vector<double> result(N);
 
-				experiment.setnlayers(nlayers);
+				cout << vlayers.size() << endl;
+
+				experiment.setnlayers(layer_count);
 				experiment.setlayers(vlayers);
 
 				experiment.setstartangle(10); //not implemented yet

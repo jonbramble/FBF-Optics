@@ -60,18 +60,18 @@ void Spr::run()
 
 		if( size == 0 )
 		{
-			//cout << "size = 0" << endl;
+			cout << "size = 0" << endl;
 			T = prod(ILa,Lf);
 			
 		}
 
 		else if ( size == 1 )
 		{
-			cout << "size = 1" << endl;
+			//cout << "size = 1" << endl;
 			eps = vlayers[0].geteps();
 			d = -1*vlayers[0].getd();
-			cout << eps << endl;
-			cout << d << endl;
+			//cout << eps << endl;
+			//cout << d << endl;
 			Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
 			Temp = prod(Tli,Lf);
 			T = prod(ILa,Temp);
@@ -80,17 +80,21 @@ void Spr::run()
 		else if (size > 1 )
 		{
 			//cout << "size > 1" << endl;
-			int pen = (size-1);
+			int pen = (size-1);  //pen = 2
 			
 			eps = vlayers[pen].geteps();
 			d = -1*vlayers[pen].getd(); // -ve sign is for optics reasons see shubert paper
+
 			Fbfoptics::gtmiso(eps,k0,eta,d,Tli); // could change gtmiso to take vlayer as argument - for iso or no iso layers
 			Temp = prod(Tli,Lf);
 
-			for( unsigned int i=(pen-1); i==0; --i)  //better with reverse iterator
+			for( unsigned int i=2; i<=0; ++i)  //better with reverse iterator --* wrong here
 			{
+				cout << "in sub loop" << endl;	
 				eps = vlayers[i].geteps();
 				d = -1*vlayers[i].getd(); 
+				cout << eps << endl;
+				cout << d << endl;
 
 				Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
 				T = prod(Tli,Temp);
