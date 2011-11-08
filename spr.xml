@@ -2,7 +2,7 @@
 <document>
 	<simulation>
 		<type simulation="spr">
-			<data_points>1000</data_points>
+			<data_points>5</data_points>
 			<n_entry>1.85</n_entry>
 			<n_exit>1.33</n_exit>
 			<layer type="isotropic">
@@ -10,6 +10,12 @@
 				<epsreal>-12.0</epsreal>
 				<epsimag>0.8</epsimag>
 				<d>49e-9</d>
+			</layer>
+			<layer type="isotropic">
+				<name>SAM</name>
+				<epsreal>2.10</epsreal>
+				<epsimag>0</epsimag>
+				<d>2e-9</d>
 			</layer>
 		
 		</type>

@@ -33,18 +33,12 @@ void Spr::getdata(boost::numeric::ublas::vector<double>& ret_data){
 void Spr::run()
 {
 	//make tests
-	static const complex<double> one = complex<double>(1,0); // can I define these elsewhere
-	static const complex<double> zero = complex<double>(0,0);
-
-	//static const complex<double> eau = complex<double>(-12.0,0.8);
-	//static const double dau = 49e-9;
 	complex<double> eps;
 	double d;
 	
 	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
 
 	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tli(4,4);
-	
 	complex<double>	result, zcphif2, cphif;
 
 	double phia, cphia, eta;
@@ -64,8 +58,6 @@ void Spr::run()
 		Fbfoptics::incmat(na,cphia,ILa);
 		Fbfoptics::extmat(nf,cphif,Lf);
 
-		
-
 		if( size == 0 )
 		{
 			//cout << "size = 0" << endl;
@@ -75,8 +67,12 @@ void Spr::run()
 
 		else if ( size == 1 )
 		{
-			//cout << "size = 1" << endl;
-			Fbfoptics::gtmiso(vlayers[0].geteps(),k0,eta,-1*vlayers[0].getd(),Tli);
+			cout << "size = 1" << endl;
+			eps = vlayers[0].geteps();
+			d = -1*vlayers[0].getd();
+			cout << eps << endl;
+			cout << d << endl;
+			Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
 			Temp = prod(Tli,Lf);
 			T = prod(ILa,Temp);
 			
