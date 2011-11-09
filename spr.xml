@@ -9,9 +9,17 @@
 				<name>gold</name>
 				<epsreal>-12.0</epsreal>
 				<epsimag>0.8</epsimag>
-				<d>59e-9</d>
+				<d>49e-9</d>
 			</layer>
-			
+			<layer type="isotropic">
+				<name>SAM</name>
+				<epsreal>2.10</epsreal>
+				<epsimag>0.0</epsimag>
+				<d>2e-9</d>
+			</layer>
+			<output>
+				<!--data types and formats -->
+			</output>
 		</type>
 	</simulation>
 </document>

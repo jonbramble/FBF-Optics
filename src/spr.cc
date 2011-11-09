@@ -12,9 +12,6 @@ Spr::Spr(){
 Spr::Spr(int N){
 	data = boost::numeric::ublas::vector<double>(N);
 	setnpts(N);
-	//cout << "points: " << N << endl;
-	//cout << "datalen: "<< data.size() << endl;
-	// set defaults
 }
 
 void Spr::setnpts(double _N){N = _N;}
@@ -69,11 +66,9 @@ void Spr::run()
 
 		else if ( size == 1 )
 		{
-			//cout << "size = 1" << endl;
+			
 			eps = vlayers[0].geteps();
 			d = -1*vlayers[0].getd();
-			//cout << eps << endl;
-			//cout << d << endl;
 			Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
 			Temp = prod(Tli,Lf);
 			T = prod(ILa,Temp);
@@ -90,14 +85,10 @@ void Spr::run()
 			Fbfoptics::gtmiso(eps,k0,eta,d,Tli); // could change gtmiso to take vlayer as argument - for iso or no iso layers
 			Temp = prod(Tli,Lf);
 
-			for( unsigned int i=2; i<1; ++i)  //better with reverse iterator --* wrong here
+			for(int i=(pen-1); i==0; --i)  //better with reverse iterator --* wrong here
 			{
-				cout << "in sub loop" << endl;	
 				eps = vlayers[i].geteps();
 				d = -1*vlayers[i].getd(); 
-				//cout << eps << endl;
-				//cout << d << endl;
-
 				Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
 				T = prod(Tli,Temp);
 				Temp = T;  // not sure if Temp = Tli*Temp will work
