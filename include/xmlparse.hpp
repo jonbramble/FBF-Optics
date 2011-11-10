@@ -13,7 +13,13 @@ class xmlparse {
 	
 	public:
 	xmlparse(char *xmlfile);
+	~xmlparse();
 	
+	private:
+	Spr *experiment;
+	TiXmlDocument *doc;
+	void sprcase(TiXmlElement *input);
+	void parseloaded();
 };
 
 
