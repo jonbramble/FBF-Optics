@@ -5,8 +5,8 @@
 #include "../include/xmlparse.hpp"
 #include <cstdio>
 
+/// Application entry point
 int main(int argc, char* argv[]) {
-
 
 	int c;
 	char* xmlfile;
@@ -23,6 +23,7 @@ int main(int argc, char* argv[]) {
 			
 		}
 	}
+	
 	
 	xmlparse *parser;
 	parser = new xmlparse(xmlfile);

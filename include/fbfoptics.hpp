@@ -1,8 +1,10 @@
 /*
- * fbfoptics.h
- *
- *  Created on: 25-Jun-2009
- *      Author: Jonathan Bramble
+ * @file fbfoptics.hpp
+ * @brief All the code required to do 4x4 optics on stratified media. Following the methods of Berreman. Can be used for both isotropic and aniostropic layers, but entry and exit media must be isotropic. isotropic layers tested, but aniostropic not yet tested
+ * 
+ * 
+ * @author Jonathan Bramble
+ * @date 25/06/2009
  */
 
 #ifndef FBFOPTICS_H_
@@ -23,9 +25,12 @@
 using namespace boost::numeric::ublas;
 using namespace std;
 
+
+
 class Fbfoptics {
 
 public:
+	/// The entrance matrix
 	static void incmat(const double, const double, matrix<complex<double> >&);
 	static void extmat(const double, const complex<double>, matrix<complex<double> >&);
 	static void dietens(const double,const double,const double,const double,const double,const double, const double, matrix<double>&);
