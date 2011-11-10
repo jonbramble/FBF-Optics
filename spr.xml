@@ -17,9 +17,6 @@
 				<epsimag>0.0</epsimag>
 				<d>2e-9</d>
 			</layer>
-			<output>
-				<!--data types and formats -->
-			</output>
 		</type>
 	</simulation>
 </document>
