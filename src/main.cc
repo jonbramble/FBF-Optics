@@ -6,7 +6,8 @@
 #include <cstdio>
 
 int main(int argc, char* argv[]) {
-	
+
+
 	int c;
 	char* xmlfile;
 	char* appname = argv[0];
@@ -22,11 +23,9 @@ int main(int argc, char* argv[]) {
 			
 		}
 	}
-
-	xmlparse parser;
-	parser(*xmlfile);
-
 	
+	xmlparse *parser;
+	parser = new xmlparse(xmlfile);
 	
 	return 0;
 }

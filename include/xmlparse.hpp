@@ -12,7 +12,7 @@ using namespace std;
 class xmlparse {
 	
 	public:
-	xmlparse(const char xmlfile);
+	xmlparse(char *xmlfile);
 	
 };
 

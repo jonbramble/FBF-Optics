@@ -1,8 +1,8 @@
 #include "../include/xmlparse.hpp"
 
-xmlparse::xmlparse(const char *xmlfile) {
+xmlparse::xmlparse(char *xmlfile) {
 
-	TiXmlDocument doc( xmlfile );
+	TiXmlDocument doc(xmlfile);
 	bool loaded = doc.LoadFile();   //load the xml file into memory
 
 	if(loaded) {
