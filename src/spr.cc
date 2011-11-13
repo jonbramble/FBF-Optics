@@ -8,7 +8,6 @@ Spr::Spr(){
 	// set defaults
 }
 
-
 Spr::Spr(int N){
 	data = boost::numeric::ublas::vector<double>(N);
 	setnpts(N);
@@ -41,7 +40,8 @@ void Spr::run()
 	double phia, cphia, eta;
 	double k0 = (2*s_pi)/lambda; // laser wavevector
 	int k;
-
+	
+	// need some kind of generalised loop
 	for(k=0;k<N;k++)
 	{
 		double radrng = ((endangle-sangle)*s_pi)/180;	
@@ -51,56 +51,29 @@ void Spr::run()
 		eta = na*sin(phia); // x comp of wavevector
 		zcphif2 = complex<double>(1-pow((na/nf)*sin(phia),2),0);  // this always picks the correct sector
 		cphif = sqrt(zcphif2);
-		//phif = boost::math::asin(complex<double>((na/nf)*sin(phia),0));
-		//cphif = cos(phif);
+		
 		Fbfoptics::incmat(na,cphia,ILa);
 		Fbfoptics::extmat(nf,cphif,Lf);
-	
-
-		if( size == 0 )
-		{
-			cout << "size = 0" << endl;
-			T = prod(ILa,Lf);
-			
-		}
-
-		else if ( size == 1 )
-		{
-			
-			eps = vlayers[0].geteps();
-			d = -1*vlayers[0].getd();
+		
+		//prod_seq.push_back(ILa); 
+		for ( iso_it=vlayers.begin() ; iso_it<vlayers.end(); iso_it++ ){//iterate over elements
+			eps = iso_it->geteps();
+			d = iso_it->getd();
 			Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
-			Temp = prod(Tli,Lf);
-			T = prod(ILa,Temp);
-			
+			prod_seq.push_back(Tli);
 		}
-		else if (size > 1 )
-		{
-			//cout << "size > 1" << endl;
-			int pen = (size-1);  //pen = 2
-			
-			eps = vlayers[pen].geteps();
-			d = -1*vlayers[pen].getd(); // -ve sign is for optics reasons see shubert paper
+		prod_seq.push_back(Lf); //add at end
 
-			Fbfoptics::gtmiso(eps,k0,eta,d,Tli); // could change gtmiso to take vlayer as argument - for iso or no iso layers
-			Temp = prod(Tli,Lf);
+		Temp = ILa;
 
-			for(int i=(pen-1); i==0; --i)  //better with reverse iterator --* wrong here
-			{
-				eps = vlayers[i].geteps();
-				d = -1*vlayers[i].getd(); 
-				Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
-				T = prod(Tli,Temp);
-				Temp = T;  // not sure if Temp = Tli*Temp will work
-			}
-
-			T = prod(ILa,Temp);
+		for ( mat_it=prod_seq.begin() ; mat_it<prod_seq.end(); mat_it++ ){//iterate over elements
+			T = prod(Temp,*mat_it);
+			Temp = T;
 		}
+		
 
-		data(k) = Fbfoptics::rpp(T);    // need to choose data
+
+		data(k) = Fbfoptics::rpp(T);    // need to choose data rpp rps etc
 		std::cout << phia << "	" << Fbfoptics::rpp(T) << std::endl;
 	}
 }
-
-
-
