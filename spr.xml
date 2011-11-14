@@ -11,12 +11,6 @@
 				<epsimag>0.8</epsimag>
 				<d>49e-9</d>
 			</layer>
-			<layer type="isotropic">
-				<name>SAM</name>
-				<epsreal>2.10</epsreal>
-				<epsimag>0.0</epsimag>
-				<d>2e-9</d>
-			</layer>
 		</type>
 	</simulation>
 </document>

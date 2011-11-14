@@ -35,6 +35,8 @@ void Spr::run()
 	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
 
 	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tli(4,4);
+	identity_matrix<complex<double> > Id(4,4);
+
 	complex<double>	result, zcphif2, phif, cphif;
 
 	double phia, cphia, eta;
@@ -55,23 +57,23 @@ void Spr::run()
 		Fbfoptics::incmat(na,cphia,ILa);
 		Fbfoptics::extmat(nf,cphif,Lf);
 		
-		//prod_seq.push_back(ILa); 
+		prod_seq.push_back(ILa); 
 		for ( iso_it=vlayers.begin() ; iso_it<vlayers.end(); iso_it++ ){//iterate over elements
 			eps = iso_it->geteps();
 			d = iso_it->getd();
-			Fbfoptics::gtmiso(eps,k0,eta,d,Tli);
+			Fbfoptics::gtmiso(eps,k0,eta,-1*d,Tli);
 			prod_seq.push_back(Tli);
 		}
 		prod_seq.push_back(Lf); //add at end
 
-		Temp = ILa;
+		Temp = Id; // resets temp
 
-		for ( mat_it=prod_seq.begin() ; mat_it<prod_seq.end(); mat_it++ ){//iterate over elements
-			T = prod(Temp,*mat_it);
+		for ( mat_it=prod_seq.rbegin() ; mat_it<prod_seq.rend(); mat_it++ ){//iterate over elements
+			T = prod(*mat_it,Temp);
 			Temp = T;
 		}
-		
-
+	
+		prod_seq.clear();
 
 		data(k) = Fbfoptics::rpp(T);    // need to choose data rpp rps etc
 		std::cout << phia << "	" << Fbfoptics::rpp(T) << std::endl;
