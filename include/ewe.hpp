@@ -25,8 +25,17 @@ class Ewe: public Fbfoptics {
 		
  public:
 	Ewe();
-	Ewe(int N);
-
+	
+	void setstartangle(double _sangle);
+	void setendangle (double _endangle);
+	void setna( double _na);
+	void setnf( double _nf);
+	void setnlayers(double _size);
+	void setlayers(std::vector<Isolayer> _layers);
+	void setlambda(double _lambda);
+	
+	void run();
+	void getdata(boost::numeric::ublas::vector<double>& ret_data);
  
 		
 
