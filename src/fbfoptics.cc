@@ -10,6 +10,15 @@
 
 #include "../include/fbfoptics.hpp"
 
+
+Fbfoptics::Fbfoptics(){
+
+}
+
+Fbfoptics::~Fbfoptics(){
+
+}
+
 void Fbfoptics::incmat(const double na, const double cphia, matrix<complex<double> >& ILa){
 	ILa(0,0) = complex<double>(0,0);
 	ILa(0,1) = complex<double>(0,0);
@@ -190,11 +199,11 @@ void Fbfoptics::gtm(const matrix<double>& Delta, const double k0, const double h
 	T = expm_pad(Tw); 
 }
 
-static matrix<complex<double> > total_trans(std::vector<matrix<complex<double> > > prod_seq)
+void Fbfoptics::total_trans(std::vector<matrix<complex<double> > > prod_seq, matrix<complex<double> >& T)
 {
 	std::vector<boost::numeric::ublas::matrix<complex<double> > >::reverse_iterator mat_it;
-	matrix<complex<double> > Temp(4,4), T(4,4);
-	identity_matrix<complex<double> > Id(4,4);  //are these created?
+	matrix<complex<double> > Temp(4,4);
+	identity_matrix<complex<double> > Id(4,4); 
 
 	Temp = Id; // resets temp
 
@@ -202,7 +211,6 @@ static matrix<complex<double> > total_trans(std::vector<matrix<complex<double> >
 			T = prod(*mat_it,Temp);
 			Temp = T;
 	}
-	
-	return T;
 }
+
 

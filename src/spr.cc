@@ -43,7 +43,7 @@ void Spr::run()
 	double k0 = (2*s_pi)/lambda; // laser wavevector
 	int k;
 	
-	// need some kind of generalised loop
+	// need some kind of generalised loop - will always have N points
 	for(k=0;k<N;k++)
 	{
 		double radrng = ((endangle-sangle)*s_pi)/180;	
@@ -66,7 +66,7 @@ void Spr::run()
 		}
 		prod_seq.push_back(Lf); //add at end
 
-		T= total_trans(prod_seq);
+		total_trans(prod_seq, T);
 	
 		prod_seq.clear();
 

@@ -9,24 +9,17 @@
 #define ISOLAYER_H_
 
 #include <complex>
+#include "Layer.hpp"
 
 using namespace std;
 
-class Isolayer {
-		
+class Isolayer: public Layer {	
+
 	public:
-	
 		void seteps(complex<double> _eps);
 		complex<double> geteps();
-
-		void setd(double _d);
-		double getd();
-	
 	private:
-
 		complex<double> eps;
-		double d; 
-
 };
 
 #endif

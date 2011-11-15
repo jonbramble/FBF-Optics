@@ -26,22 +26,26 @@ using namespace std;
 class Fbfoptics {
 
 public:
+	Fbfoptics();
+	~Fbfoptics();
+
+protected:
 	/// The entrance matrix
-	static void incmat(const double, const double, matrix<complex<double> >&);
+	void incmat(const double, const double, matrix<complex<double> >&);
 	/// The exit matrix
-	static void extmat(const double, const complex<double>, matrix<complex<double> >&);
+	void extmat(const double, const complex<double>, matrix<complex<double> >&);
 	/// The dielectric tensor
-	static void dietens(const double,const double,const double,const double,const double,const double, const double, matrix<double>&);
+	void dietens(const double,const double,const double,const double,const double,const double, const double, matrix<double>&);
 	/// The general transfer matrix for isotropic layers
-	static void gtmiso(const complex<double>,const double,const double,const double, matrix<complex<double> >&);
+	void gtmiso(const complex<double>,const double,const double,const double, matrix<complex<double> >&);
 	/// The general transfer matrix for anisotropic layers
-	static void gtm(const matrix<double>& Delta, const double k0, const double h, matrix<complex<double> >& T);
+	void gtm(const matrix<double>& Delta, const double k0, const double h, matrix<complex<double> >& T);
 	/// The differential propagation matrix Delta
-	static void diffpropmat(const matrix<double> ep, const double eta, matrix<double>& Delta);
+	void diffpropmat(const matrix<double> ep, const double eta, matrix<double>& Delta);
 	/// Calculates from the total transfer matrix the rpp reflectivity co-efficient
-	static double rpp(const matrix<complex<double> >& M);
+	double rpp(const matrix<complex<double> >& M);
 	/// Returns the product of the sequence of transfer matricies
-	static matrix<complex<double> > total_trans(std::vector<boost::numeric::ublas::matrix<complex<double> > > prod_seq);
+	void total_trans(std::vector<boost::numeric::ublas::matrix<complex<double> > > prod_seq, matrix<complex<double> >& T);
 };
 
 #endif /* FBFOPTICS_H_ */

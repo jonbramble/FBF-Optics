@@ -53,6 +53,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_FBF_Optics_OBJECTS = src/main.$(OBJEXT) src/fbfoptics.$(OBJEXT) \
 	src/spr.$(OBJEXT) src/isolayer.$(OBJEXT) \
+	src/anisolayer.$(OBJEXT) src/layer.$(OBJEXT) \
 	src/xmlparse.$(OBJEXT)
 FBF_Optics_OBJECTS = $(am_FBF_Optics_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -85,12 +86,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/jon/Programming/C/FBF-Optics/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/jon/Programming/C/FBF-Optics/missing --run tar
-AUTOCONF = ${SHELL} /home/jon/Programming/C/FBF-Optics/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/jon/Programming/C/FBF-Optics/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/jon/Programming/C/FBF-Optics/missing --run automake-1.11
-AWK = mawk
+ACLOCAL = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run tar
+AUTOCONF = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run automake-1.11
+AWK = gawk
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
@@ -111,7 +112,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/jon/Programming/C/FBF-Optics/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = FBP_optics
@@ -127,10 +128,10 @@ SHELL = /bin/bash
 STRIP = 
 TINYXML_LIBS = -ltinyxml
 VERSION = 0.1
-abs_builddir = /home/jon/Programming/C/FBF-Optics
-abs_srcdir = /home/jon/Programming/C/FBF-Optics
-abs_top_builddir = /home/jon/Programming/C/FBF-Optics
-abs_top_srcdir = /home/jon/Programming/C/FBF-Optics
+abs_builddir = /home/DS/phyjpb/Programming/C/FBF-Optics
+abs_srcdir = /home/DS/phyjpb/Programming/C/FBF-Optics
+abs_top_builddir = /home/DS/phyjpb/Programming/C/FBF-Optics
+abs_top_srcdir = /home/DS/phyjpb/Programming/C/FBF-Optics
 ac_ct_CXX = g++
 am__include = include
 am__leading_dot = .
@@ -149,7 +150,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/jon/Programming/C/FBF-Optics/install-sh
+install_sh = ${SHELL} /home/DS/phyjpb/Programming/C/FBF-Optics/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -174,7 +175,7 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 #AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
 FBF_Optics_LDADD = $(TINYXML_LIBS)
-FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc src/xmlparse.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp include/xmlparse.hpp
+FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc src/anisolayer.cc src/layer.cc src/xmlparse.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp include/xmlparse.hpp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -280,6 +281,9 @@ src/fbfoptics.$(OBJEXT): src/$(am__dirstamp) \
 src/spr.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/isolayer.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/anisolayer.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+src/layer.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/xmlparse.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 FBF_Optics$(EXEEXT): $(FBF_Optics_OBJECTS) $(FBF_Optics_DEPENDENCIES) 
@@ -288,8 +292,10 @@ FBF_Optics$(EXEEXT): $(FBF_Optics_OBJECTS) $(FBF_Optics_DEPENDENCIES)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f src/anisolayer.$(OBJEXT)
 	-rm -f src/fbfoptics.$(OBJEXT)
 	-rm -f src/isolayer.$(OBJEXT)
+	-rm -f src/layer.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
 	-rm -f src/spr.$(OBJEXT)
 	-rm -f src/xmlparse.$(OBJEXT)
@@ -297,8 +303,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include src/$(DEPDIR)/anisolayer.Po
 include src/$(DEPDIR)/fbfoptics.Po
 include src/$(DEPDIR)/isolayer.Po
+include src/$(DEPDIR)/layer.Po
 include src/$(DEPDIR)/main.Po
 include src/$(DEPDIR)/spr.Po
 include src/$(DEPDIR)/xmlparse.Po
