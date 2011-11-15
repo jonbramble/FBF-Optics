@@ -24,7 +24,11 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 
 using namespace std;
 
-class Layer: public Isolayer, public Anisolayer {
+class Layer {
+
+	public:
+
+		Layer(bool is_iso);
 
 	private:
 		bool is_iso;
