@@ -9,7 +9,7 @@
 #define ISOLAYER_H_
 
 #include <complex>
-#include "Layer.hpp"
+#include "layer.hpp"
 
 using namespace std;
 

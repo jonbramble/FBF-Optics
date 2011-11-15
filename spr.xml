@@ -2,7 +2,7 @@
 <document>
 	<simulation>
 		<type simulation="spr">
-			<data_points>2500</data_points>
+			<data_points>250</data_points>
 			<n_entry>1.85</n_entry>
 			<n_exit>1.33</n_exit>
 			<layer type="isotropic">
