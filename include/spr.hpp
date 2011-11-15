@@ -6,7 +6,7 @@
 #include "fbfoptics.hpp"
 #include "isolayer.hpp"
 
-class Spr {
+class Spr: public Fbfoptics {
 		
 	public:
 	Spr();
@@ -33,9 +33,7 @@ class Spr {
 	boost::numeric::ublas::vector<double> data; // how can i pass the ref to the 'main' data allocation?
 	std::vector<Isolayer> vlayers;
 	std::vector<Isolayer>::iterator iso_it;
-	std::vector<boost::numeric::ublas::matrix<complex<double> > >::reverse_iterator mat_it;
 	std::vector<boost::numeric::ublas::matrix<complex<double> > > prod_seq;
-	std::vector<boost::numeric::ublas::matrix<complex<double> > > prod_seq_temp;
 	
 	complex<double> eps;
 	double d;

@@ -40,6 +40,8 @@ public:
 	static void diffpropmat(const matrix<double> ep, const double eta, matrix<double>& Delta);
 	/// Calculates from the total transfer matrix the rpp reflectivity co-efficient
 	static double rpp(const matrix<complex<double> >& M);
+	/// Returns the product of the sequence of transfer matricies
+	static matrix<complex<double> > total_trans(std::vector<boost::numeric::ublas::matrix<complex<double> > > prod_seq);
 };
 
 #endif /* FBFOPTICS_H_ */

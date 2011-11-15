@@ -34,7 +34,7 @@ void Spr::run()
 	//make tests
 	static const double s_pi = static_cast<double>(3.141592653589793238462643383279502884197L);
 
-	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Temp(4,4), Tli(4,4);
+	matrix<complex<double> > T(4,4), ILa(4,4), Lf(4,4), Tli(4,4);
 	identity_matrix<complex<double> > Id(4,4);
 
 	complex<double>	result, zcphif2, phif, cphif;
@@ -54,28 +54,23 @@ void Spr::run()
 		zcphif2 = complex<double>(1-pow((na/nf)*sin(phia),2),0);  // this always picks the correct sector
 		cphif = sqrt(zcphif2);
 		
-		Fbfoptics::incmat(na,cphia,ILa);
-		Fbfoptics::extmat(nf,cphif,Lf);
+		incmat(na,cphia,ILa);
+		extmat(nf,cphif,Lf);
 		
 		prod_seq.push_back(ILa); 
 		for ( iso_it=vlayers.begin() ; iso_it<vlayers.end(); iso_it++ ){//iterate over elements
 			eps = iso_it->geteps();
 			d = iso_it->getd();
-			Fbfoptics::gtmiso(eps,k0,eta,-1*d,Tli);
+			gtmiso(eps,k0,eta,-1*d,Tli);
 			prod_seq.push_back(Tli);
 		}
 		prod_seq.push_back(Lf); //add at end
 
-		Temp = Id; // resets temp
-
-		for ( mat_it=prod_seq.rbegin() ; mat_it<prod_seq.rend(); mat_it++ ){//iterate over elements
-			T = prod(*mat_it,Temp);
-			Temp = T;
-		}
+		T= total_trans(prod_seq);
 	
 		prod_seq.clear();
 
-		data(k) = Fbfoptics::rpp(T);    // need to choose data rpp rps etc
-		std::cout << phia << "	" << Fbfoptics::rpp(T) << std::endl;
+		data(k) = rpp(T);    // need to choose data rpp rps etc
+		std::cout << phia << "	" << rpp(T) << std::endl;
 	}
 }

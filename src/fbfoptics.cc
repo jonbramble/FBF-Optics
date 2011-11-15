@@ -190,3 +190,19 @@ void Fbfoptics::gtm(const matrix<double>& Delta, const double k0, const double h
 	T = expm_pad(Tw); 
 }
 
+static matrix<complex<double> > total_trans(std::vector<matrix<complex<double> > > prod_seq)
+{
+	std::vector<boost::numeric::ublas::matrix<complex<double> > >::reverse_iterator mat_it;
+	matrix<complex<double> > Temp(4,4), T(4,4);
+	identity_matrix<complex<double> > Id(4,4);  //are these created?
+
+	Temp = Id; // resets temp
+
+	for ( mat_it=prod_seq.rbegin() ; mat_it<prod_seq.rend(); mat_it++ ){//iterate over elements
+			T = prod(*mat_it,Temp);
+			Temp = T;
+	}
+	
+	return T;
+}
+
