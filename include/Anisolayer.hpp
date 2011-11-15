@@ -8,7 +8,7 @@
 #ifndef ANISOLAYER_H_
 #define ANISOLAYER_H_
 
-using namespace std;
+#include "Layer.hpp"
 
 class Anisolayer: public Layer {	
 

@@ -7,10 +7,10 @@
 
 #include "../include/Anisolayer.hpp"
 
-void Anisolayer::setepsx(double _epsx){ epsx = _epxs; }
+void Anisolayer::setepsx(double _epsx){ epsx = _epsx; }
 double Anisolayer::getepsx(){ return epsx; }
 
-void Anisolayer::setepsy(double _epsy){ epsx = _epxy; }
+void Anisolayer::setepsy(double _epsy){ epsy = _epsy; }
 double Anisolayer::getepsx(){ return epsx; }
 
 void Anisolayer::setepsz(double _epsz){ epsz = _epxz; }
