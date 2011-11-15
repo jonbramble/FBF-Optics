@@ -7,7 +7,7 @@ FBF-Optics is free software: you can redistribute it and/or modify it
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * gtk-testrun is distributed in the hope that it will be useful, but
+ * FBF-Optics is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -19,11 +19,11 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 #define ISOLAYER_H_
 
 #include <complex>
-#include "layer.hpp"
+#include "base_layer.hpp"
 
 using namespace std;
 
-class Isolayer: public Layer {	
+class Isolayer: public Base_layer {	
 
 	public:
 		void seteps(complex<double> _eps);

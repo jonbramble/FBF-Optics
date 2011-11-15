@@ -1,5 +1,5 @@
 /*
- * layer.cc
+ * base_layer.hpp
  * Copyright (C) Jonathan Bramble 2011
  * 
 FBF-Optics is free software: you can redistribute it and/or modify it
@@ -7,7 +7,7 @@ FBF-Optics is free software: you can redistribute it and/or modify it
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * gtk-testrun is distributed in the hope that it will be useful, but
+ * FBF-Optics is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -15,9 +15,23 @@ FBF-Optics is free software: you can redistribute it and/or modify it
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "../include/layer.hpp"
 
-void Layer::setd(double _d){ d = _d; }
-double Layer::getd(){ return d; }
-void Layer::setname(char* _name){ name = _name; }
-char* Layer::getname(){ return name; }
+#ifndef BASE_LAYER_H_
+#define BASE_LAYER_H_
+
+using namespace std;
+
+class Base_layer {
+
+	public:
+		void setname(char* _name);
+		char* getname();
+		void setd(double _d);
+		double getd();
+
+	private:
+		char* name;
+		double d;
+};
+
+#endif

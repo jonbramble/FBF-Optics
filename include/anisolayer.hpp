@@ -7,7 +7,7 @@ FBF-Optics is free software: you can redistribute it and/or modify it
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * gtk-testrun is distributed in the hope that it will be useful, but
+ * FBF-Optics is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
@@ -19,9 +19,9 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 #ifndef ANISOLAYER_H_
 #define ANISOLAYER_H_
 
-#include "layer.hpp"
+#include "base_layer.hpp"
 
-class Anisolayer: public Layer {	
+class Anisolayer: public Base_layer {	
 
 	public:
 		void setepsx(double _epsx);

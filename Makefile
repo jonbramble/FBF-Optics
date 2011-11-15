@@ -53,7 +53,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_FBF_Optics_OBJECTS = src/main.$(OBJEXT) src/fbfoptics.$(OBJEXT) \
 	src/spr.$(OBJEXT) src/isolayer.$(OBJEXT) \
-	src/anisolayer.$(OBJEXT) src/layer.$(OBJEXT) \
+	src/anisolayer.$(OBJEXT) src/base_layer.$(OBJEXT) \
 	src/xmlparse.$(OBJEXT)
 FBF_Optics_OBJECTS = $(am_FBF_Optics_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -175,7 +175,7 @@ ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
 #AM_CPPFLAGS = $(GSL_CFLAGS) $(OPENMP_CFLAGS)
 FBF_Optics_LDADD = $(TINYXML_LIBS)
-FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc src/anisolayer.cc src/layer.cc src/xmlparse.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp include/xmlparse.hpp
+FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc src/anisolayer.cc src/base_layer.cc src/xmlparse.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp include/xmlparse.hpp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -283,7 +283,8 @@ src/isolayer.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/anisolayer.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/layer.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/base_layer.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 src/xmlparse.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 FBF_Optics$(EXEEXT): $(FBF_Optics_OBJECTS) $(FBF_Optics_DEPENDENCIES) 
@@ -293,9 +294,9 @@ FBF_Optics$(EXEEXT): $(FBF_Optics_OBJECTS) $(FBF_Optics_DEPENDENCIES)
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f src/anisolayer.$(OBJEXT)
+	-rm -f src/base_layer.$(OBJEXT)
 	-rm -f src/fbfoptics.$(OBJEXT)
 	-rm -f src/isolayer.$(OBJEXT)
-	-rm -f src/layer.$(OBJEXT)
 	-rm -f src/main.$(OBJEXT)
 	-rm -f src/spr.$(OBJEXT)
 	-rm -f src/xmlparse.$(OBJEXT)
@@ -304,9 +305,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include src/$(DEPDIR)/anisolayer.Po
+include src/$(DEPDIR)/base_layer.Po
 include src/$(DEPDIR)/fbfoptics.Po
 include src/$(DEPDIR)/isolayer.Po
-include src/$(DEPDIR)/layer.Po
 include src/$(DEPDIR)/main.Po
 include src/$(DEPDIR)/spr.Po
 include src/$(DEPDIR)/xmlparse.Po

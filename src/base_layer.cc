@@ -1,5 +1,5 @@
 /*
- * main.cc
+ * base_layer.cc
  * Copyright (C) Jonathan Bramble 2011
  * 
 FBF-Optics is free software: you can redistribute it and/or modify it
@@ -15,39 +15,9 @@ FBF-Optics is free software: you can redistribute it and/or modify it
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "../include/base_layer.hpp"
 
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include "../include/xmlparse.hpp"
-#include <cstdio>
-
-/// Application entry point
-int main(int argc, char* argv[]) {
-
-	int c;
-	char* xmlfile;
-	char* appname = argv[0];
-
-	while((c = getopt(argc, argv, "x:")) != -1){			//taken from gnu example
-		switch(c){
-		case 'x':
-			xmlfile = optarg;
-			break;
-		default:
-			fprintf(stderr, "usage: %s [-x xml simulation file]\n", appname);
-			exit(-1);
-			
-		}
-	}
-	
-	
-	xmlparse *parser;
-	parser = new xmlparse(xmlfile);
-	
-	return 0;
-}
-
-
+void Base_layer::setd(double _d){ d = _d; }
+double Base_layer::getd(){ return d; }
+void Base_layer::setname(char* _name){ name = _name; }
+char* Base_layer::getname(){ return name; }

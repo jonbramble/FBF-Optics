@@ -495,8 +495,9 @@ src/main.o: src/main.cc config.h src/../include/xmlparse.hpp \
  src/../include/../include/complex_methods.hpp \
  src/../include/../include/expm.hpp \
  src/../include/../include/isolayer.hpp \
+ src/../include/../include/base_layer.hpp \
  src/../include/../include/layer.hpp \
- src/../include/../include/isolayer.hpp /usr/include/c++/4.6/cstdio
+ src/../include/../include/anisolayer.hpp /usr/include/c++/4.6/cstdio
 
 config.h:
 
@@ -1618,8 +1619,10 @@ src/../include/../include/expm.hpp:
 
 src/../include/../include/isolayer.hpp:
 
+src/../include/../include/base_layer.hpp:
+
 src/../include/../include/layer.hpp:
 
-src/../include/../include/isolayer.hpp:
+src/../include/../include/anisolayer.hpp:
 
 /usr/include/c++/4.6/cstdio:

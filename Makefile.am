@@ -20,7 +20,7 @@ FBF_Optics_LDADD = $(TINYXML_LIBS)
 ## the C++ compiler to produce an object file (.o) from each source file. The
 ## header files (.h) do not result in object files by themselves, but will be
 ## included in distribution archives of the project.
-FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc src/anisolayer.cc src/layer.cc src/xmlparse.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp include/xmlparse.hpp
+FBF_Optics_SOURCES = src/main.cc src/fbfoptics.cc src/spr.cc src/isolayer.cc src/anisolayer.cc src/base_layer.cc src/xmlparse.cc include/spr.hpp include/isolayer.hpp include/expm.hpp include/fbfoptics.hpp include/xmlparse.hpp
 
 ## Define an independent executable script for inclusion in the distribution
 ## archive. It will not be installed on an end user's system, however.
