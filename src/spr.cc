@@ -18,7 +18,7 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 
 
 #include "../include/spr.hpp"
-#include "../include/isolayer.hpp"
+//#include "../include/isolayer.hpp"
 #include <boost/math/complex/asin.hpp>
 
 Spr::Spr(){
@@ -38,7 +38,7 @@ void Spr::setstartangle(double _sangle){sangle = _sangle;}
 void Spr::setendangle (double _endangle){endangle = _endangle;}
 void Spr::setnf(double _nf){nf = _nf;}
 void Spr::setnlayers(double _size){size = _size;}
-void Spr::setlayers(std::vector<Isolayer> _layers){   // must check these have been called
+void Spr::setlayers(std::vector<Layer> _layers){   // must check these have been called
 	vlayers = _layers;
 }		
 	

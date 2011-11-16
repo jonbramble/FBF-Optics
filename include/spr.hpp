@@ -19,7 +19,7 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 #define SPR_H
 
 #include "fbfoptics.hpp"
-#include "isolayer.hpp"
+#include "layer.hpp"
 
 class Spr: public Fbfoptics {
 		
@@ -32,7 +32,7 @@ class Spr: public Fbfoptics {
 	void setna( double _na);
 	void setnf( double _nf);
 	void setnlayers(double _size);
-	void setlayers(std::vector<Isolayer> _layers);
+	void setlayers(std::vector<Layer> _layers);
 	void setlambda(double _lambda);
 	
 	void run();
@@ -45,8 +45,8 @@ class Spr: public Fbfoptics {
 	int N, size;
 
 	boost::numeric::ublas::vector<double> data; // how can i pass the ref to the 'main' data allocation?
-	std::vector<Isolayer> vlayers;
-	std::vector<Isolayer>::iterator iso_it;
+	std::vector<Layer> vlayers;
+	std::vector<Layer>::iterator iso_it;
 	std::vector<boost::numeric::ublas::matrix<complex<double> > > prod_seq;
 	
 	complex<double> eps;

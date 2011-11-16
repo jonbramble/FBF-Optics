@@ -1,5 +1,5 @@
 /*
- * layer.hpp
+ * Layer.hpp
  * Copyright (C) Jonathan Bramble 2011
  * 
 FBF-Optics is free software: you can redistribute it and/or modify it
@@ -19,20 +19,43 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 #ifndef LAYER_H_
 #define LAYER_H_
 
-#include "isolayer.hpp"
-#include "anisolayer.hpp"
+#include <complex>
 
 using namespace std;
 
 class Layer {
 
 	public:
+		void setname(char* _name);
+		char* getname();
+		void setd(double _d);
+		double getd();
+		
+		void setiso(bool _is_iso);
+		bool getiso();
 
-		Layer(bool is_iso);
+		void setepsx(double _epsx);
+		void setepsy(double _epsy);
+		void setepsz(double _epsz);
+		void settheta(double _theta);
+		void setphi(double _phi);
+
+		double getepsx();
+		double getepsy();
+		double getepsz();
+		double gettheta();
+		double getphi();
+
+		void seteps(complex<double> _eps);
+		complex<double> geteps();
 
 	private:
+		char* name;
+		double d;
+		double epsx, epsy, epsz, theta, phi;
 		bool is_iso;
-	
+		complex<double> eps;
+
 };
 
 #endif

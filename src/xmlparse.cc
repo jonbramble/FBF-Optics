@@ -38,7 +38,7 @@ void xmlparse::sprcase(TiXmlElement *input)
 	int N;
 	double n_entry, n_exit;
 	int layer_count = 0;
-	std::vector<Isolayer> vlayers(0);  // dont know size of array
+	std::vector<Layer> vlayers(0);  // dont know size of array
 
 	cout << "Starting Simulation..." << endl;
 
