@@ -19,7 +19,7 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 #define EWE_H
 
 #include "fbfoptics.hpp"
-#include "isolayer.hpp"
+#include "layer.hpp"
 
 class Ewe: public Fbfoptics {
 		
@@ -31,14 +31,11 @@ class Ewe: public Fbfoptics {
 	void setna( double _na);
 	void setnf( double _nf);
 	void setnlayers(double _size);
-	void setlayers(std::vector<Isolayer> _layers);
+	void setlayers(std::vector<Layer> _layers);
 	void setlambda(double _lambda);
 	
 	void run();
 	void getdata(boost::numeric::ublas::vector<double>& ret_data);
- 
-		
-
 };
 
 #endif

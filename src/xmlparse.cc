@@ -19,8 +19,17 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 #include "../include/xmlparse.hpp"
 
 xmlparse::~xmlparse(){
-	delete experiment;
+	delete spr_simulation;
+	delete ewe_simulation;
 	delete doc;
+}
+
+void xmlparse::ewecase(TiXmlElement *input)
+{
+	cout << "EWE Simulation Mode" << endl;			// we know it is this mode
+	cout << "Parsing data file...." << endl;		// must do error handling on missing parameters
+
+	cout << "Simulation Complete" << endl;
 }
 
 void xmlparse::sprcase(TiXmlElement *input) 
@@ -36,26 +45,36 @@ void xmlparse::sprcase(TiXmlElement *input)
 			
 	const char *read;
 	int N;
-	double n_entry, n_exit;
+	double n_entry, n_exit, lambda, start_angle, end_angle;
 	int layer_count = 0;
 	std::vector<Layer> vlayers(0);  // dont know size of array
 
 	cout << "Starting Simulation..." << endl;
-
-	sim = iRoot.FirstChild("data_points").Element();
-	read = sim->GetText();	
+	
+	//seg fault if these are not present
+	//datapoints
+	read = iRoot.FirstChild("data_points").Element()->GetText();
 	N = atoi(read);
 	cout << "Using " << N << " data points" << endl;
 
-	sim = iRoot.FirstChild("n_entry").Element();
-	read = sim->GetText();	
+	read = iRoot.FirstChild("start_angle").Element()->GetText();
+	start_angle = atof(read);
+	cout << "Starting Angle: " << start_angle << endl;
+
+	read = iRoot.FirstChild("end_angle").Element()->GetText();
+	end_angle = atof(read);
+	cout << "End Angle: " << end_angle << endl;
+
+	read = iRoot.FirstChild("n_entry").Element()->GetText();	
 	n_entry = atof(read);
 	cout << "Entry Media Index: " << n_entry << endl;
 
-	sim = iRoot.FirstChild("n_exit").Element();
-	read = sim->GetText();	
+	read = iRoot.FirstChild("n_exit").Element()->GetText();	
 	n_exit= atof(read);
 	cout << "Exit Media Index: " << n_exit << endl;
+
+	read = iRoot.FirstChild("lambda").Element()->GetText();
+	lambda = atof(read);
 
 	layer_element = iRoot.FirstChild("layer").Element();
 	for(layer_element;layer_element;layer_element=layer_element->NextSiblingElement())
@@ -86,22 +105,20 @@ void xmlparse::sprcase(TiXmlElement *input)
 		layer_count +=1;
 	}
 
-	experiment = new Spr(N);
+	spr_simulation = new Spr(N);
 	boost::numeric::ublas::vector<double> result(N);
 
-	//cout << vlayers.size() << endl;
+	spr_simulation->setnlayers(layer_count);
+	spr_simulation->setlayers(vlayers);
 
-	experiment->setnlayers(layer_count);
-	experiment->setlayers(vlayers);
+	spr_simulation->setstartangle(start_angle); 
+	spr_simulation->setendangle(end_angle);
+	spr_simulation->setna(n_entry);
+	spr_simulation->setnf(n_exit);
+	spr_simulation->setlambda(lambda);
 
-	experiment->setstartangle(0); 
-	experiment->setendangle(90);
-	experiment->setna(n_entry);
-	experiment->setnf(n_exit);
-	experiment->setlambda(633e-9); //not implemented yet
-
-	experiment->run();  //error handling required
-	experiment->getdata(result);
+	spr_simulation->run();  //more error handling required
+	spr_simulation->getdata(result);
 	//cout << result << endl;
 				
 	cout << "Simulation Complete" << endl;
@@ -136,6 +153,10 @@ void xmlparse::parseloaded()
 		if(input->FirstAttribute()->Name() == str_sim && input->FirstAttribute()->Value() == str_spr)
 		{	
 			sprcase(input);
+		}
+		else if(input->FirstAttribute()->Name() == str_sim && input->FirstAttribute()->Value() == str_ewe)
+		{
+			ewecase(input);
 		}
 	}		
 }

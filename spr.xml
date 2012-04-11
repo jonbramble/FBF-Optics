@@ -2,9 +2,12 @@
 <document>
 	<simulation>
 		<type simulation="spr">
-			<data_points>10000</data_points>
+			<data_points>10</data_points>
+			<start_angle>10</start_angle>
+			<end_angle>70</end_angle>
 			<n_entry>1.85</n_entry>
 			<n_exit>1.33</n_exit>
+			<lambda>633e-9</lambda>
 			<layer type="isotropic">
 				<name>gold</name>
 				<epsreal>-12.0</epsreal>

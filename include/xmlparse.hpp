@@ -21,6 +21,7 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 
 #include <tinyxml.h>
 #include "../include/spr.hpp"
+#include "../include/ewe.hpp"
 #include "../include/layer.hpp"
 
 
@@ -34,9 +35,11 @@ class xmlparse {
 	~xmlparse();
 	
 	private:
-	Spr *experiment;
+	Spr *spr_simulation;
+	Ewe *ewe_simulation;
 	TiXmlDocument *doc;
 	void sprcase(TiXmlElement *input);
+	void ewecase(TiXmlElement *input);
 	void parseloaded();
 };
 

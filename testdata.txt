@@ -4,8 +4,6 @@ SPR Simulation Mode
 Parsing data file....
 Starting Simulation...
 Using 10000 data points
-Starting Angle: 0
-End Angle: 90
 Entry Media Index: 1.85
 Exit Media Index: 1.33
 Processing layer 1

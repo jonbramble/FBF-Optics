@@ -18,13 +18,11 @@ FBF-Optics is free software: you can redistribute it and/or modify it
 
 
 #include "../include/spr.hpp"
-//#include "../include/isolayer.hpp"
 #include <boost/math/complex/asin.hpp>
 
 Spr::Spr(){
 	data = boost::numeric::ublas::vector<double>(100);
-	setnpts(100);
-	// set defaults
+	setnpts(100);// set defaults
 }
 
 Spr::Spr(int N){
@@ -58,15 +56,18 @@ void Spr::run()
 
 	complex<double>	result, zcphif2, phif, cphif;
 
+	double end_angle_rad = endangle*(s_pi/180);
+	double start_angle_rad = sangle*(s_pi/180);
+	double range_rad = end_angle_rad-start_angle_rad;
+
 	double phia, cphia, eta;
 	double k0 = (2*s_pi)/lambda; // laser wavevector
 	int k;
 	
 	// need some kind of generalised loop - will always have N points
 	for(k=0;k<N;k++)
-	{
-		double radrng = ((endangle-sangle)*s_pi)/180;	
-		phia = sangle+k*(radrng/N); //input angle
+	{	
+		phia = start_angle_rad+k*(range_rad/N); //input angle
 
 		cphia = cos(phia); 
 		eta = na*sin(phia); // x comp of wavevector
@@ -90,6 +91,6 @@ void Spr::run()
 		prod_seq.clear();
 
 		data(k) = rpp(T);    // need to choose data rpp rps etc
-		std::cout << phia << "	" << rpp(T) << std::endl;
+		//std::cout << phia << "	" << rpp(T) << std::endl;
 	}
 }
