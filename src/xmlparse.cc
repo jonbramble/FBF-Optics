@@ -119,7 +119,7 @@ void xmlparse::sprcase(TiXmlElement *input)
 
 	spr_simulation->run();  //more error handling required
 	spr_simulation->getdata(result);
-	//cout << result << endl;
+    cout << result << endl;
 				
 	cout << "Simulation Complete" << endl;
 		
